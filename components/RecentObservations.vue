@@ -24,15 +24,18 @@ export default {
     }
   },
   mounted() {
-      if(this.$route.query.hotspot !== '') {
+      if(this.$route.query.hotspot !== undefined) {
         this.getRecentObservationsInARegion(this.$route.query.hotspot)
         this.getSelectedHotspotInfo(this.$route.query.hotspot)             
       } 
   },
   watch: {
      selectedHotspot: function(newVal, oldVal) { // watch it
-      this.getRecentObservationsInARegion(newVal)
-      this.getSelectedHotspotInfo(newVal)
+      if(newVal !== undefined) {
+        this.getRecentObservationsInARegion(newVal)
+        this.getSelectedHotspotInfo(newVal)
+      }
+
     }
   },
   methods: {

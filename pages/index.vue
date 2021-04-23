@@ -46,8 +46,6 @@ export default {
     return {
       selectedRegion: this.$route.query.region,
       selectedHotspot: this.$route.query.hotspot
-
-
     }
     
   },
@@ -72,6 +70,7 @@ export default {
     onSelectedRegion(value) {
       this.$router.push({ query: {region: value} })
       this.selectedRegion = value
+      this.onSelectedHotspot()
       // this.getHotspotsInARegion();
     },
     onSelectedHotspot(value) {
