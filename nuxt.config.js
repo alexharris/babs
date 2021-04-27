@@ -17,10 +17,13 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+
+
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~plugins/vue-select'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -40,6 +43,8 @@ export default {
     '@nuxtjs/pwa',
     // https://i18n.nuxtjs.org/setup
     'nuxt-i18n',
+    // Simple usage
+    'nuxt-vue-select',    
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -52,7 +57,32 @@ export default {
     }
   },
   i18n: {
-    locales: ['en', 'zh_SIM', 'es'],
+    locales: [
+      {
+        code: 'en',
+        name: 'English'
+      },
+      {
+        code: 'zh',
+        name: 'Chinese'
+      },
+      {
+        code: 'es',
+        name: 'Spanish'
+      },
+      {
+        code: 'ru',
+        name: 'Russian'
+      },
+      {
+        code: 'fr',
+        name: 'French'
+      },
+      {
+        code: 'ko',
+        name: 'Korean'
+      },                                    
+    ],
     defaultLocale: 'en',
     vueI18n: {
       fallbackLocale: 'en',
@@ -63,8 +93,17 @@ export default {
         es: {
           title: 'búsqueda de aves en el área de la bahía'
         },
-        zh_SIM: {
+        zh: {
           title: '湾区鸟类搜索'
+        },
+        ru: {
+          title: 'бухта поиск птиц'
+        },
+        fr: {
+          title: 'recherche d\'oiseaux dans la région de la baie'
+        },
+        ko: {
+          title: '베이 지역 조류 검색'
         }
       }
     }

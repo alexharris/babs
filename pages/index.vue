@@ -1,29 +1,37 @@
 
 <template>
-  <div class="container">
-    <div class="border border-red-200 m-8 p-4">
-      <nuxt-link
-      v-for="locale in availableLocales"
-      :key="locale.code"
-      :to="switchLocalePath(locale)">
-      {{locale}} </nuxt-link>
-    </div>
-    <div class="border border-red-200 m-8 p-4 flex flex-row justify-between">    
+  <div class="w-full">
+
+    <!-- <div class="bg-gray-100 p-4 h-16 flex flex-row justify-between fixed w-full z-50">    
+      <div @click="goBack" v-if="view !== 'intro'"> Back </div>
+      
+    </div>     -->
+
+
       <h1>{{ $t("title") }}</h1>
-      <a href="/">reset</a>
-    </div>
-    <RegionSelector 
-      @selected-region="onSelectedRegion" 
-    />   
-    <HotspotSelector 
-      v-show="selectedRegion"
-      :selected-region="selectedRegion" 
-      @selected-hotspot="onSelectedHotspot" 
-    />
-    <RecentObservations 
-      v-show="selectedHotspot"
-      :selected-hotspot="selectedHotspot"    
-    />
+      <RegionSelector 
+        @selected-region="onSelectedRegion" 
+      />   
+
+    <!-- <div id="region" class="w-full bg-white absolute top-16 bottom-0 p-4" v-show="view == 'region'">
+    {{regionInfo.result}}
+      <HotspotSelector 
+        v-show="selectedRegion"
+        :selected-region="selectedRegion" 
+        @selected-hotspot="onSelectedHotspot" 
+      />
+    </div>     -->
+    <!-- <div id="hotspot" class="h-full w-full bg-white absolute top-16 bottom-0 p-4" v-show="view == 'hotspot'">
+      <RecentObservationsInARegion 
+        v-show="selectedHotspot"
+        :selected-hotspot="selectedHotspot"    
+        @selected-species="onSelectedSpecies"
+      />
+    </div>      -->
+    <!-- <div id="species" class="h-full w-full bg-white absolute top-16 bottom-0 p-4" v-if="view == 'species'">
+      SPECIES STUFF!!
+      <Species />
+    </div>      -->
   </div>
 </template>
 
@@ -33,28 +41,26 @@ import EbirdClient, { Detail } from "ebird-client";
 const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
 
 import RegionSelector from '~/components/RegionSelector.vue'
-import HotspotSelector from '~/components/HotspotSelector.vue'
-import RecentObservations from '~/components/RecentObservations.vue'
+// import HotspotSelector from '~/components/HotspotSelector.vue'
+// import RecentObservationsInARegion from '~/components/RecentObservationsInARegion.vue'
 
 export default {
   components: {
     RegionSelector,
-    HotspotSelector,
-    RecentObservations
+    // HotspotSelector,
+    // RecentObservationsInARegion
   },  
   data() {
     return {
       selectedRegion: this.$route.query.region,
-      selectedHotspot: this.$route.query.hotspot
+      // selectedHotspot: this.$route.query.hotspot,  
+      // selectedSpecies: this.$route.query.species,
+      // view: 'intro' ,
+      // regionInfo: ''
     }
     
   },
-  computed: {
-    availableLocales () {
-      // console.log(this.$i18n.locales.filter(i => i.code !== this.$i18n.locale));
-      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
-    }
-  },
+
   // computed: {
   //   regionSelected(e) {
   //       this.selectedRegion = e.target.value
@@ -65,20 +71,37 @@ export default {
   mounted() {
     // this.getRecentNearbyNotableObservations();
     // this.getAllRegionInfo()
+    // this.startingView()
+    // this.getSelectedRegionInfo()
   },
   methods: {
     onSelectedRegion(value) {
-      this.$router.push({ query: {region: value} })
       this.selectedRegion = value
-      this.onSelectedHotspot()
+      this.$router.push({ query: {region: value} })
+      this.view = 'region'
+      // this.getSelectedRegionInfo()
       // this.getHotspotsInARegion();
     },
-    onSelectedHotspot(value) {
+    // onSelectedHotspot(value) {
+    //   this.$router.push({ query: {region: this.selectedRegion, hotspot: value} })
+    //   this.selectedHotspot = value
+    //   this.view = 'hotspot'
+    //   // this.getRecentObservationsInARegion();
+    // },
+    // onSelectedSpecies(value) {
+    //   this.$router.push({ query: {region: this.selectedRegion, hotspot: this.selectedHotspot, species: value} })
+    //   this.view = 'species'
+    // },    
+    // startingView() {
+    //   if(this.selectedHotspot !== undefined) {
+    //     this.view = 'hotspot'
+    //   } else if(this.selectedRegion !== undefined) {
+    //     this.view = 'region'
+    //   } else {
+    //     this.view = 'intro'
+    //   }
+    // },
 
-      this.$router.push({ query: {region: this.selectedRegion, hotspot: value} })
-      this.selectedHotspot = value
-      // this.getRecentObservationsInARegion();
-    },
 
     // getAllRegionInfo() {
     //   this.regionCodes.forEach(element => {
