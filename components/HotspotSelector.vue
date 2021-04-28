@@ -7,17 +7,17 @@
               {{hotspot.locName}} ({{hotspot.numSpeciesAllTime}}) {{determineHotness(hotspot.numSpeciesAllTime)}}
           </option>  
       </select>  -->
-      <input class="form-control" type="text" v-model="searchQuery" placeholder="Search" />
+      <input class="search-field" type="text" v-model="searchQuery" placeholder="Search" />
       <table class=" w-full my-2">
         <thead class="text-left">
             <tr>
-                <th>Hotspot</th>
-                <th>#</th>
+                <th @click="sortByTitle()">Hotspot</th>
+                <th @click="sortByQuantity()">#</th>
             </tr>
         </thead>   
         <tbody>   
           <tr v-for="hotspot in resultQuery">
-            <td class="border-t border-gray-400 py-2"><span @click="hotspotSelected(hotspot.locId)">{{hotspot.locName}}</span></td>
+            <td class="border-t border-gray-400 py-2"><span @click="hotspotSelected(hotspot.locId)">{{determineHotness(hotspot.numSpeciesAllTime)}} {{hotspot.locName}}</span></td>
             <td class="border-t border-gray-400 py-2">{{hotspot.numSpeciesAllTime}}</td>
           </tr> 
         </tbody> 
@@ -51,6 +51,8 @@ export default {
   data() {
     return {
       searchQuery: null,
+      sort: 'hotAsc',
+      sortTitle: 'titleAsc',
       selectedRegion: this.$route.query.region,
       hotspotsInARegion: []
     }
@@ -116,6 +118,36 @@ export default {
         return ''
       }
     },
+    sortByQuantity() {
+      console.log('sort')
+      if(this.sort !== 'hotAsc') {
+        this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
+          return a.numSpeciesAllTime - b.numSpeciesAllTime;
+        });
+        this.sort = 'hotAsc'
+      } else {
+        this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
+          return b.numSpeciesAllTime - a.numSpeciesAllTime;
+        });        
+        this.sort = 'hotDesc'
+      }
+
+    }, 
+    sortByTitle() {
+      console.log('sort')
+      if(this.sortTitle !== 'titleAsc') {
+        this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
+          return a.locName.toLowerCase() > b.locName.toLowerCase();
+        });
+        this.sortTitle = 'titleAsc'
+      } else {
+        this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
+          return b.locName.toLowerCase() > a.locName.toLowerCase();
+        });        
+        this.sortTitle = 'titleDesc'
+      }
+
+    },        
     getRecentObservationsInARegion(data) {
       for(let i = 0; i < data.length; i++){
         ebird.recentObservationsInARegion({

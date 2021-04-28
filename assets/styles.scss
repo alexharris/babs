@@ -14,3 +14,9 @@ h1 {
     font-family: 'times new roman';
     @apply text-3xl
 }
+
+
+
+.search-field {
+    @apply border-b border-black w-full my-6 text-2xl
+}
