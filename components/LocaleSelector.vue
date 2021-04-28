@@ -1,5 +1,5 @@
 <template>
-    <div >
+
     <!-- <nuxt-link
     v-for="locale in availableLocales"
     :key="locale.code"
@@ -19,7 +19,7 @@
           {{name}}
         </template>
     </v-select>
-    </div>
+
 
     
 

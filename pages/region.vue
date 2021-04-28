@@ -1,11 +1,10 @@
 <template>
     <div >
-      <h1>{{selectedRegion}}</h1>
+      <h1>{{selectedRegion.name}} Hotspots</h1>
       <HotspotSelector 
         :selected-region="selectedRegion.code" 
-
       />      
-    </div>
+    </div> 
 </template>
 
 <script>
@@ -21,7 +20,8 @@ export default {
     HotspotSelector,
   },
   mounted() {
-      // this.getAllRegionInfo()
+      // this.getRegionInfo()
+
   },
   data() {
     return {
@@ -35,7 +35,18 @@ export default {
     }
   },
   methods: {
-
+    getRegionInfo() {
+      this.regionCodes.forEach(element => {
+        ebird.regionInfo({
+          regionCode: element
+        }).then((data) => {
+          this.allRegionInfo.push({
+            id: element,
+            name: data.result
+          })
+        }) 
+      });
+    },
   }
 }
 </script>

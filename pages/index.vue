@@ -8,7 +8,7 @@
     </div>     -->
 
 
-      <h1>{{ $t("title") }}</h1>
+      <h1 class="logo">{{ $t("title") }}</h1>
       <RegionSelector 
         @selected-region="onSelectedRegion" 
       />   

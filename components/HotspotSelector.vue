@@ -1,6 +1,5 @@
 <template>
     <div >
-      <h2>Hotspots in Region</h2>
       <!-- <select name="region" :value="selectedHotspot" @change="$emit('selected-hotspot', $event.target.value)">
           <option value="" disabled selected>Select your option</option>
           <option v-for="hotspot in hotspotsInARegion" :value="hotspot.locId">
@@ -8,6 +7,7 @@
               {{hotspot.locName}} ({{hotspot.numSpeciesAllTime}}) {{determineHotness(hotspot.numSpeciesAllTime)}}
           </option>  
       </select>  -->
+      <input class="form-control" type="text" v-model="searchQuery" placeholder="Search" />
       <table class=" w-full my-2">
         <thead class="text-left">
             <tr>
@@ -16,7 +16,7 @@
             </tr>
         </thead>   
         <tbody>   
-          <tr v-for="hotspot in hotspotsInARegion">
+          <tr v-for="hotspot in resultQuery">
             <td class="border-t border-gray-400 py-2"><span @click="hotspotSelected(hotspot.locId)">{{hotspot.locName}}</span></td>
             <td class="border-t border-gray-400 py-2">{{hotspot.numSpeciesAllTime}}</td>
           </tr> 
@@ -50,6 +50,7 @@ export default {
   // props: ['selectedRegion'],
   data() {
     return {
+      searchQuery: null,
       selectedRegion: this.$route.query.region,
       hotspotsInARegion: []
     }
@@ -76,7 +77,22 @@ export default {
         return this.$route.query.hotspot
       // }
       
+    },
+    resultQuery(){
+      //  return this.searchQuery.split('').reverse().join('')
+      if(this.searchQuery !== null){
+        console.log('hello')
+        return this.hotspotsInARegion.filter((item)=>{
+          return this.searchQuery.toLowerCase().split(' ').every(v => item.locName.toLowerCase().includes(v))
+        })
+      }else{
+        return this.hotspotsInARegion;
+      }        
+      
+        
+
     }
+
   },  
   methods: {
     getHotspotsInARegion(value) {
@@ -84,6 +100,7 @@ export default {
         fmt: 'json',
         regionCode: value        
       }).then((data) => {
+        console.log(data)
         this.hotspotsInARegion = data
         // this.getRecentObservationsInARegion(data)
       })  

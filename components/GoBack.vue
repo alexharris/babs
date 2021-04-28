@@ -10,7 +10,8 @@
 export default {
 
   mounted() {
-
+console.log(this.$route.path)    
+console.log(this.$route.query)
 },
   data() {
     return {
@@ -19,7 +20,13 @@ export default {
   },
   methods: {
     goBack() {
-        this.$router.go(-1)
+        
+        
+        if(this.$route.path == '/region') {
+          this.$router.push({ path: '/' })
+        } else if (this.$route.path == '/hotspot') {
+          this.$router.push({ path: '/region', query: { region: this.$route.query.region } })
+        }
 
     },
   }
