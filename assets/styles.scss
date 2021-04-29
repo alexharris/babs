@@ -4,7 +4,7 @@
 
 
 .logo {
-    @apply text-6xl leading-normal text-justify;
+    @apply text-5xl text-justify;
     max-width: 800px;
     
     
@@ -15,7 +15,10 @@ h1 {
     @apply text-3xl
 }
 
-
+h2 {
+    font-family: 'times new roman';
+    @apply text-2xl py-2
+}
 
 .search-field {
     @apply border-b border-black w-full my-6 text-2xl

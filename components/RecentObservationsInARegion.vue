@@ -4,12 +4,19 @@
       <LoadingAnimation />
     </template>
     <template v-else>
-      <h2>Recent Obersvations @ {{hotspotInfo.name}}</h2>
+      <div id="map-wrap" class="w-full h-64">
+        <client-only>
+          <l-map :zoom=10 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
+            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+            <l-marker :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]"></l-marker>
+          </l-map>
+        </client-only>
+      </div>      
       <table class=" w-full my-2">
         <thead class="text-left">
             <tr>
                 <th>Bird</th>
-                <th>#</th>
+                <th @click="sortByQuantity()">#</th>
             </tr>
         </thead>   
         <tbody>   
@@ -32,7 +39,6 @@ const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
 import LoadingAnimation from '~/components/LoadingAnimation.vue'
 
 export default {
-  // props: ['selectedHotspot'],
   components: {
     LoadingAnimation
   },
@@ -41,26 +47,13 @@ export default {
       selectedHotspot: this.$route.query.hotspot,
       recentObservationsInARegion: [],
       hotspotInfo: '',
-      loading: true
+      loading: true,
+      sort: 'hotAsc',
     }
   },
   mounted() {
-      // if(this.$route.query.hotspot !== undefined) {
-        this.getRecentObservationsInARegion(this.$route.query.hotspot)
-        this.getSelectedHotspotInfo(this.$route.query.hotspot)             
-      // } 
-
+    this.getRecentObservationsInARegion(this.$route.query.hotspot)
   },
-
-  // watch: {
-  //    selectedHotspot: function(newVal, oldVal) { // watch it
-  //     if(newVal !== undefined) {
-  //       this.getRecentObservationsInARegion(newVal)
-  //       this.getSelectedHotspotInfo(newVal)
-  //     }
-
-  //   }
-  // },
   methods: {
     getRecentObservationsInARegion(value) {
       this.loading = true
@@ -75,16 +68,31 @@ export default {
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
         this.recentObservationsInARegion = data
-        this.loading = false
+        this.getHotspotInfo(value)
       })           
     },
-   getSelectedHotspotInfo() {
+    getHotspotInfo(value) {
       ebird.hotspotInfo({
-        locId: this.selectedHotspot
+        locId: value        
       }).then((data) => {
         this.hotspotInfo = data
-      })      
-    },    
+        this.loading = false
+      })  
+    },
+    sortByQuantity() {
+      if(this.sort !== 'hotAsc') {
+        this.recentObservationsInARegion = this.recentObservationsInARegion.sort(function(a, b) {
+          return a.howMany - b.howMany;
+        });
+        this.sort = 'hotAsc'
+      } else {
+        this.recentObservationsInARegion = this.recentObservationsInARegion.sort(function(a, b) {
+          return b.howMany - a.howMany;
+        });        
+        this.sort = 'hotDesc'
+      }
+
+    },     
     howMany: function(value) {
       if(value) {
         return value
@@ -97,14 +105,7 @@ export default {
       // if(code != null) {
       //   this.$emit('selected-species', code)
       // }
-    }
-    // getTaxonomicGroups() {
-    //   ebird.taxonomicGroups({
-    //     speciesGrouping: "merlin",
-    //   }).then((data) => {
-    //     console.log(data)
-    //   })           
-    // },              
+    }           
   }
 }
 </script>

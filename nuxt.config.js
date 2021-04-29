@@ -44,7 +44,9 @@ export default {
     // https://i18n.nuxtjs.org/setup
     'nuxt-i18n',
     // Simple usage
-    'nuxt-vue-select',    
+    'nuxt-vue-select', 
+    // Leaflet
+    'nuxt-leaflet'   
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

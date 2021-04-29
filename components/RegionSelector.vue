@@ -1,5 +1,6 @@
 <template>
     <div >
+    
         <!-- <template v-if="selectedRegion == undefined"> -->
         <h2>Select a region</h2>
         <!-- <select name="region" :value="selectedRegion" @change="$emit('selected-region', $event.target.value)">

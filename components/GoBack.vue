@@ -9,18 +9,10 @@
 
 export default {
 
-  mounted() {
-console.log(this.$route.path)    
-console.log(this.$route.query)
-},
-  data() {
-    return {
-
-    }
-  },
   methods: {
     goBack() {
         
+       console.log(this.$route.path)
         
         if(this.$route.path == '/region') {
           this.$router.push({ path: '/' })
