@@ -1,6 +1,17 @@
 <template>
-    <div >
+    <div v-if="!loading">
       <input class="search-field" type="text" v-model="searchQuery" placeholder="Search" />
+
+      <div id="map-wrap" class="w-full h-64" v-show="hotspotsInARegion">       
+        <client-only>
+          <l-map :zoom=9 :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]">
+            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+            <template v-for="spot in resultQuery">
+              <l-marker :lat-lng="[spot.lat,spot.lng]" @click="hotspotSelected(spot.locId)"></l-marker>
+            </template>
+          </l-map>
+        </client-only>
+      </div>  
       <table class=" w-full my-2">
         <thead class="text-left">
             <tr>
@@ -20,12 +31,9 @@
 
 <script>
 
-import EbirdClient, { Detail } from "ebird-client";
-const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
-// https://github.com/dannyfritz/ebird-client#readme
 
 export default {
-  // props: ['selectedRegion'],
+  props: ['regioninfo'],
   data() {
     return {
       searchQuery: null,
@@ -34,16 +42,20 @@ export default {
       selectedRegion: this.$route.query.region,
       hotspotsInARegion: [],
       hotspotInfo: [],
+      loading: true
+
     }
   },
   mounted() {
+    console.log('hello')
     this.getHotspotsInARegion(this.selectedRegion)
+    
   },
   computed: {
 
     resultQuery(){
       if(this.searchQuery !== null){
-        console.log('hello')
+        
         return this.hotspotsInARegion.filter((item)=>{
           return this.searchQuery.toLowerCase().split(' ').every(v => item.locName.toLowerCase().includes(v))
         })
@@ -55,12 +67,21 @@ export default {
   },  
   methods: {
     getHotspotsInARegion(value) {
-      ebird.hotspotsInARegion({
-        fmt: 'json',
-        regionCode: value        
-      }).then((data) => {
-        this.hotspotsInARegion = data
-      })  
+
+      this.$axios.get('https://api.ebird.org/v2/ref/hotspot/' + this.$route.query.region, {
+        params: {
+          back: 30,
+          fmt: 'json'
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.hotspotsInARegion = response.data
+        this.loading = false
+      }, (error) => {
+        console.log(error);
+      });      
+
     },
     determineHotness(obs) {
       if(obs > 300) {

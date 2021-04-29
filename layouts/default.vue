@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="p-2 flex flex-row justify-between w-full z-50">  
+    <div class="p-4 flex flex-row justify-between w-full z-50">  
       <div><GoBack  v-if="this.$route.path !== '/'" /></div>
       <div><LocaleSelector /></div>
     </div>
-    <div class="p-2">
+    <div class="p-4">
       <Nuxt />
     </div>
   </div>

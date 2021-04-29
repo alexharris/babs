@@ -1,16 +1,17 @@
 <template>
-    <div >
-      <h1>{{selectedRegion.name}} Hotspots</h1>
-      
-      <HotspotSelector />      
+    <div v-if="!loading">
+
+      <h1> {{regionInfo.data.result}} County Hotspots</h1>
+      <HotspotSelector 
+        :regioninfo="regionInfo"
+      />      
     </div> 
+    <div v-else>
+      <LoadingAnimation />
+    </div>
 </template>
 
 <script>
-
-import EbirdClient, { Detail } from "ebird-client";
-const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
-// https://github.com/dannyfritz/ebird-client#readme
 
 import HotspotSelector from '~/components/HotspotSelector.vue'
 
@@ -19,22 +20,31 @@ export default {
     HotspotSelector,
   },
   mounted() {
-      // this.getRegionInfo()
-
+      this.getRegionInfo()
   },
   data() {
     return {
-
-    }
-  },
-  computed: {
-    selectedRegion() {
-      return this.$store.state.region
-      
+      regionInfo: {},
+      loading: true
     }
   },
   methods: {
+    getRegionInfo() {
 
+      
+      this.$axios.get('https://api.ebird.org/v2/ref/region/info/' + this.$route.query.region, {
+        params: {
+          regionNameFormat: 'nameonly'
+        }
+      })
+      .then((response) => {
+        this.regionInfo = response
+        this.loading = false
+      }, (error) => {
+        console.log(error);
+      });
+     
+    }
   }
 }
 </script>

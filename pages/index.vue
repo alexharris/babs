@@ -1,37 +1,10 @@
 
 <template>
   <div class="w-full">
-
-    <!-- <div class="bg-gray-100 p-4 h-16 flex flex-row justify-between fixed w-full z-50">    
-      <div @click="goBack" v-if="view !== 'intro'"> Back </div>
-      
-    </div>     -->
-
-
-      <h1 class="logo">{{ $t("title") }}</h1>
-      <RegionSelector 
-        @selected-region="onSelectedRegion" 
-      />   
-
-    <!-- <div id="region" class="w-full bg-white absolute top-16 bottom-0 p-4" v-show="view == 'region'">
-    {{regionInfo.result}}
-      <HotspotSelector 
-        v-show="selectedRegion"
-        :selected-region="selectedRegion" 
-        @selected-hotspot="onSelectedHotspot" 
-      />
-    </div>     -->
-    <!-- <div id="hotspot" class="h-full w-full bg-white absolute top-16 bottom-0 p-4" v-show="view == 'hotspot'">
-      <RecentObservationsInARegion 
-        v-show="selectedHotspot"
-        :selected-hotspot="selectedHotspot"    
-        @selected-species="onSelectedSpecies"
-      />
-    </div>      -->
-    <!-- <div id="species" class="h-full w-full bg-white absolute top-16 bottom-0 p-4" v-if="view == 'species'">
-      SPECIES STUFF!!
-      <Species />
-    </div>      -->
+    <h1 class="logo mb-8">{{ $t("title") }}</h1>
+    <RegionSelector 
+      @selected-region="onSelectedRegion" 
+    />   
   </div>
 </template>
 

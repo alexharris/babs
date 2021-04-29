@@ -4,11 +4,11 @@
       <LoadingAnimation />
     </template>
     <template v-else>
-      <div id="map-wrap" class="w-full h-64">
+      <div id="map-wrap" class="w-full h-64 rounded-full">
         <client-only>
-          <l-map :zoom=10 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
+          <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
             <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-            <l-marker :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]"></l-marker>
+            <l-marker  :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]"></l-marker>
           </l-map>
         </client-only>
       </div>      
@@ -32,10 +32,6 @@
 
 <script>
 
-import EbirdClient, { Detail } from "ebird-client";
-const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
-// https://github.com/dannyfritz/ebird-client#readme
-
 import LoadingAnimation from '~/components/LoadingAnimation.vue'
 
 export default {
@@ -56,28 +52,36 @@ export default {
   },
   methods: {
     getRecentObservationsInARegion(value) {
-      this.loading = true
-      ebird.recentObservationsInARegion({
-        regionCode: value,
-        back: 30,
-        sppLocale: this.$i18n.locale
-      }).then((data) => {
-        data.sort(function(a, b) {
+      console.log(value)
+      this.$axios.get('https://api.ebird.org/v2/data/obs/' + this.$route.query.region + '/recent', {
+        params: {
+          back: 30,
+          sppLocale: this.$i18n.locale
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        response.data.sort(function(a, b) {
           var textA = a.comName.toUpperCase();
           var textB = b.comName.toUpperCase();
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
-        this.recentObservationsInARegion = data
+        this.recentObservationsInARegion = response.data
         this.getHotspotInfo(value)
-      })           
+      }, (error) => {
+        console.log(error);
+      }); 
+         
     },
     getHotspotInfo(value) {
-      ebird.hotspotInfo({
-        locId: value        
-      }).then((data) => {
-        this.hotspotInfo = data
+      this.$axios.get('https://api.ebird.org/v2/ref/hotspot/info/' + value, {
+      })
+      .then((response) => {
+        this.hotspotInfo = response.data
         this.loading = false
-      })  
+      }, (error) => {
+        console.log(error);
+      }); 
     },
     sortByQuantity() {
       if(this.sort !== 'hotAsc') {
