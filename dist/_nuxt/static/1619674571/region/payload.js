@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/region", {data:[{}],fetch:{},mutations:[]});

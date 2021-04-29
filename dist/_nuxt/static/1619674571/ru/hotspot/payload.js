@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/ru/hotspot", {data:[{}],fetch:{},mutations:[]});
