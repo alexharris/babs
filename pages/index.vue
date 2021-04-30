@@ -14,12 +14,13 @@ import EbirdClient, { Detail } from "ebird-client";
 const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
 
 import RegionSelector from '~/components/RegionSelector.vue'
+
 // import HotspotSelector from '~/components/HotspotSelector.vue'
 // import RecentObservationsInARegion from '~/components/RecentObservationsInARegion.vue'
 
 export default {
   components: {
-    RegionSelector,
+    RegionSelector
     // HotspotSelector,
     // RecentObservationsInARegion
   },  

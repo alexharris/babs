@@ -2,7 +2,7 @@
     <div v-if="!loading">
       <input class="search-field" type="text" v-model="searchQuery" placeholder="Search" />
 
-      <div id="map-wrap" class="w-full h-64" v-show="hotspotsInARegion">       
+      <div id="map-wrap" class="w-full h-64 relative z-30" v-show="hotspotsInARegion">       
         <client-only>
           <l-map :zoom=9 :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]">
             <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -43,19 +43,14 @@ export default {
       hotspotsInARegion: [],
       hotspotInfo: [],
       loading: true
-
     }
   },
   mounted() {
-    console.log('hello')
     this.getHotspotsInARegion(this.selectedRegion)
-    
   },
   computed: {
-
     resultQuery(){
-      if(this.searchQuery !== null){
-        
+      if(this.searchQuery !== null){ 
         return this.hotspotsInARegion.filter((item)=>{
           return this.searchQuery.toLowerCase().split(' ').every(v => item.locName.toLowerCase().includes(v))
         })
@@ -63,7 +58,6 @@ export default {
         return this.hotspotsInARegion;
       }        
     }
-
   },  
   methods: {
     getHotspotsInARegion(value) {
@@ -75,13 +69,11 @@ export default {
         }
       })
       .then((response) => {
-        console.log(response.data);
         this.hotspotsInARegion = response.data
         this.loading = false
       }, (error) => {
         console.log(error);
       });      
-
     },
     determineHotness(obs) {
       if(obs > 300) {
@@ -95,7 +87,6 @@ export default {
       }
     },
     sortByQuantity() {
-      console.log('sort')
       if(this.sort !== 'hotAsc') {
         this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
           return a.numSpeciesAllTime - b.numSpeciesAllTime;
@@ -110,7 +101,6 @@ export default {
 
     }, 
     sortByTitle() {
-      console.log('sort')
       if(this.sortTitle !== 'titleAsc') {
         this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
           return a.locName.toLowerCase() > b.locName.toLowerCase();
@@ -131,8 +121,6 @@ export default {
   }
 }
 </script>
-
-
 
 
 

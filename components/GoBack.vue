@@ -1,5 +1,5 @@
 <template>
-    <div @click="goBack()">
+    <div @click="goBack()" class="cursor-pointer">
         Back
     </div>
 </template>

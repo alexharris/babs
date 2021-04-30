@@ -1,7 +1,7 @@
 <template>
     <div v-if="!loading">
 
-      <h1> {{regionInfo.data.result}} County Hotspots</h1>
+      <h1> {{regionInfo.data.result}} County</h1>
       <HotspotSelector 
         :regioninfo="regionInfo"
       />      

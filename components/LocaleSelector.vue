@@ -6,21 +6,21 @@
     :to="switchLocalePath(locale)">
       {{locale}} 
     </nuxt-link> -->
+    <div class="border border-black">
+      <v-select 
+          :options="availableLocales" 
+          @input="localeSelected"
+          label="name"
+          :clearable="false"
+          class="style-chooser"
+          :value="currentLocale"
+      >
+          <template #option="{ code, name }">
+            {{name}}
+          </template>
+      </v-select>
 
-    <v-select 
-        :options="availableLocales" 
-        @input="localeSelected"
-        label="name"
-        :clearable="false"
-        class="style-chooser"
-        :value="currentLocale"
-    >
-        <template #option="{ code, name }">
-          {{name}}
-        </template>
-    </v-select>
-
-
+    </div>
     
 
 </template>
