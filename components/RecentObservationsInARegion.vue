@@ -22,7 +22,7 @@
         <tbody>   
           <tr v-for="ob in recentObservationsInARegion">
             <td class="border-t border-gray-400 py-2"><span @click="speciesSelected(ob.speciesCode)">{{ob.comName}}</span></td>
-            <td class="border-t border-gray-400 py-2">{{howMany(ob.howMany)}}</td>
+            <td class="border-t border-gray-400 py-2">{{howMany(ob.howMany)}}  </td>
           </tr> 
         </tbody> 
       </table>  
@@ -105,10 +105,8 @@ export default {
       }
     },
     speciesSelected(code) {
-      // console.log(code)
-      // if(code != null) {
-      //   this.$emit('selected-species', code)
-      // }
+      // this.$store.commit('setHotspot', value)
+      this.$router.push({ path: '/species', query: {region: this.$route.query.region, hotspot: this.$route.query.hotspot, species: code} })
     }           
   }
 }
