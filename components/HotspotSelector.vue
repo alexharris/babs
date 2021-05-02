@@ -1,6 +1,11 @@
 <template>
     <div v-if="!loading">
-      <input class="search-field" type="text" v-model="searchQuery" placeholder="Search" />
+      <div class="fixed bottom-0 left-0 bg-white w-full border-t-2 border-black">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+</svg>        
+        <input class="search-field p-2 text-lg border border-gray-200 w-full" type="text" v-model="searchQuery" placeholder="Search" />
+      </div>
 
       <div id="map-wrap" class="w-full h-64 relative z-30" v-show="hotspotsInARegion">       
         <client-only>
@@ -116,7 +121,7 @@ export default {
     },        
     hotspotSelected(value) {
       this.$store.commit('setHotspot', value)
-      this.$router.push({ path: 'hotspot', query: {region: this.selectedRegion, hotspot:value} })
+      this.$router.push({ path: '/region/hotspot', query: {region: this.selectedRegion, hotspot:value} })
     }, 
   }
 }

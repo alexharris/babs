@@ -1,19 +1,27 @@
 <template>
     <div >
-        <h2>Select a county:</h2>
-        <v-select 
+      <h2>Select a county:</h2>
+      <table class=" w-full my-2">  
+        <tbody>   
+          <tr v-for="region in regions">
+            <td class="border-t border-gray-400 py-2"><span @click="regionSelected(region)">{{region.name}}</span> </td>
+          </tr> 
+        </tbody> 
+      </table>         
+        <!-- <v-select 
           label="name" 
           :options="regions" 
           @input="regionSelected" 
           :clearable="false" 
           class="style-chooser border-b border-black"
-        />
+        /> -->
     </div>
 </template>
 
 <script>
 
 export default {
+  
   mounted() {
       // this.getAllRegionInfo()
   },

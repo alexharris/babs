@@ -53,7 +53,7 @@ export default {
   methods: {
     getRecentObservationsInARegion(value) {
       console.log(value)
-      this.$axios.get('https://api.ebird.org/v2/data/obs/' + this.$route.query.region + '/recent', {
+      this.$axios.get('https://api.ebird.org/v2/data/obs/' + this.$route.query.hotspot + '/recent', {
         params: {
           back: 30,
           sppLocale: this.$i18n.locale
@@ -106,7 +106,7 @@ export default {
     },
     speciesSelected(code) {
       // this.$store.commit('setHotspot', value)
-      this.$router.push({ path: '/species', query: {region: this.$route.query.region, hotspot: this.$route.query.hotspot, species: code} })
+      this.$router.push({ path: '/region/hotspot/species', query: {region: this.$route.query.region, hotspot: this.$route.query.hotspot, species: code} })
     }           
   }
 }
