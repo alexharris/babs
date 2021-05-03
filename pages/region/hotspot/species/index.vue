@@ -1,7 +1,14 @@
 <template>
     <div>
         <div v-if="!loading">
-          {{speciesInfo.data}}
+        <SearchList 
+          :list="speciesInfo.data" 
+          titleProp="comName"  
+          v-on:filter-query="filteredHotspots = $event" 
+        />
+
+          <!-- {{speciesInfo.data}} -->
+          <img src="~/assets/mewgul.png" />
         <h1>{{speciesInfo.data[0].comName}}</h1>
         <p>{{speciesInfo.data[0].sciName}}</p>
       <div id="map-wrap" class="w-full h-64 rounded-full">
@@ -23,7 +30,7 @@
                 </tr>
             </thead>   
             <tbody>         
-                <tr v-for="ob in speciesInfo.data">
+                <tr v-for="ob in filteredSpecies.data">
                     <td class="border-t border-gray-400 py-2">{{ob.locName}}</td>
                     <td class="border-t border-gray-400 py-2">{{ob.howMany}}</td>
                     <td class="border-t border-gray-400 py-2">{{ob.obsDate}}</td>
@@ -47,6 +54,7 @@ export default {
   },
   data() {
     return {
+      filteredSpecies: [],
       speciesInfo: {},
       loading: true
     }
@@ -60,6 +68,7 @@ export default {
       })
       .then((response) => {
         this.speciesInfo = response
+        this.filteredSpecies = response
         this.loading = false
         console.log(response.data)
       }, (error) => {

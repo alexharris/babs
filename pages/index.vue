@@ -1,7 +1,7 @@
 
 <template>
   <div class="w-full">
-    <h1 class="logo mb-8">{{ $t("title") }}</h1>
+    <h1 class="logo mb-4">{{ $t("title") }}</h1>
     <RegionSelector 
       @selected-region="onSelectedRegion" 
     />   

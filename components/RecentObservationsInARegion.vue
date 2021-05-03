@@ -4,6 +4,11 @@
       <LoadingAnimation />
     </template>
     <template v-else>
+      <SearchList 
+        :list="recentObservationsInARegion" 
+        titleProp="comName"  
+        v-on:filter-query="filteredSpecies = $event" 
+      />      
       <div id="map-wrap" class="w-full h-64 rounded-full">
         <client-only>
           <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
@@ -20,7 +25,7 @@
             </tr>
         </thead>   
         <tbody>   
-          <tr v-for="ob in recentObservationsInARegion">
+          <tr v-for="ob in filteredSpecies">
             <td class="border-t border-gray-400 py-2"><span @click="speciesSelected(ob.speciesCode)">{{ob.comName}}</span></td>
             <td class="border-t border-gray-400 py-2">{{howMany(ob.howMany)}}  </td>
           </tr> 
@@ -42,6 +47,7 @@ export default {
     return {
       selectedHotspot: this.$route.query.hotspot,
       recentObservationsInARegion: [],
+      filteredSpecies: [],
       hotspotInfo: '',
       loading: true,
       sort: 'hotAsc',
@@ -67,6 +73,7 @@ export default {
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
         this.recentObservationsInARegion = response.data
+        this.filteredSpecies = response.data
         this.getHotspotInfo(value)
       }, (error) => {
         console.log(error);

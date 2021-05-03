@@ -3,11 +3,11 @@
     
       
   
-    <div class="p-4 flex flex-column justify-between w-full z-50 ">  
+    <div class="py-2 px-4 flex flex-column justify-between w-full z-50 ">  
       <div><GoBack  v-if="this.$route.path !== '/'" /></div>
       <!-- <Menu /> -->
     </div>
-    <div class="p-4">
+    <div class="px-4">
       <Nuxt keep-alive />
     </div>
   </div>

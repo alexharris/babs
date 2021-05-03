@@ -4,7 +4,7 @@
 
 
 .logo {
-    @apply text-5xl text-justify leading-normal;
+    @apply text-5xl text-justify leading-tight;
     max-width: 800px;
     
     
@@ -12,7 +12,7 @@
 
 h1 {
     font-family: 'times new roman';
-    @apply text-3xl pb-4
+    @apply text-3xl pb-2
 }
 
 h2 {

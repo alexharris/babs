@@ -6,7 +6,8 @@
         <LoadingAnimation />
       </template>
       <template v-else>
-    {{recentObservationsOfASpecies[0]}}
+    <!-- {{recentObservationsOfASpecies[0]}} -->
+    HEllo:<img src="~/assets/mewgul.png" />
     <h1>{{recentObservationsOfASpecies[0].comName}}</h1>
     <h2>{{recentObservationsOfASpecies[0].sciName}}</h2>
         <table class=" w-full my-2">
