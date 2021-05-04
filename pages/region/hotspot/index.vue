@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full">
-    <h2>{{hotspotInfo.name}}</h2>
+  <div class="h-full flex flex-col">
+    <h1>{{hotspotInfo.name}}</h1>
 
     <RecentObservationsInARegion />       
   </div>

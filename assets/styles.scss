@@ -12,10 +12,18 @@
 
 h1 {
     font-family: 'times new roman';
-    @apply text-3xl pb-2
+    @apply text-2xl pb-2
 }
 
 h2 {
     font-family: 'times new roman';
-    @apply text-2xl py-2
+    @apply py-2
+}
+
+p {
+    @apply mb-4
+}
+
+.fixedSearch { 
+    @apply  top-0 left-0 bg-white fixed shadow p-2
 }

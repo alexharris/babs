@@ -1,6 +1,5 @@
 <template>
-    <div v-if="!loading">
-
+    <div class="h-full flex flex-col" v-if="!loading">
       <h1> {{regionInfo.data.result}} County</h1>
       <HotspotSelector 
         :regioninfo="regionInfo"

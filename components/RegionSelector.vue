@@ -1,25 +1,15 @@
 <template>
     <div >
       <SearchList :list="regions" titleProp="name" v-on:filter-query="filteredRegions = $event" />
-      <table class=" w-full my-2">  
-        <thead class="text-left">
-            <tr>
-                <th>County</th>
-            </tr>
-        </thead>          
+     
+      <table class="w-full">          
         <tbody>   
           <tr v-for="region in filteredRegions">
-            <td class="border-t border-gray-400 py-2"><span @click="regionSelected(region)">{{region.name}}</span> </td>
+            <td class="border-t border-gray-100 py-2 px-2 cursor-pointer hover:bg-gray-100"><span @click="regionSelected(region)">{{region.name}}</span> </td>
           </tr> 
         </tbody> 
       </table>         
-        <!-- <v-select 
-          label="name" 
-          :options="regions" 
-          @input="regionSelected" 
-          :clearable="false" 
-          class="style-chooser border-b border-black"
-        /> -->
+
     </div>
 </template>
 
@@ -50,7 +40,8 @@ export default {
     regionSelected(value) {
       this.$store.commit('setRegion', value)
       this.$router.push({ path: 'region', query: {region: this.selectedRegion.code} })
-    }
+    },
+    
   }
 }
 </script>

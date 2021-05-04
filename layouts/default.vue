@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="flex flex-col h-screen">
     
       
   
-    <div class="py-2 px-4 flex flex-column justify-between w-full z-50 ">  
+    <div class="py-2 px-4 justify-between w-full z-50 ">  
       <div><GoBack  v-if="this.$route.path !== '/'" /></div>
       <!-- <Menu /> -->
     </div>
-    <div class="px-4">
+    <div class="px-4 h-full">
       <Nuxt keep-alive />
     </div>
   </div>

@@ -7,9 +7,11 @@
 
 
 <template>
-
-    <div class="w-full ">  
-        <input class="search-field p-2 mb-2 text-lg w-full bg-gray-200 rounded text-black" type="text" v-model="searchQuery" placeholder="Search" @input="filterList()" />  
+  <div>
+      <span ref="thing"></span>
+      <div :class="{ fixedSearch: scrollPosition < 0}" class="w-full mb-4 ">  
+          <input ref="search" class="search-field p-2 text-lg w-full bg-gray-100 rounded text-black" type="text" v-model="searchQuery" placeholder="Search" @input="filterList()" />  
+      </div>
     </div>
 </template>
 
@@ -20,12 +22,21 @@ export default {
   
   props: ['list', 'titleProp'],
   mounted() {
+    window.addEventListener('scroll', this.updateScroll);    
   },
   data() {
     return {
       searchQuery: null,
+      scrollPosition: null
     }
   },
+  // computed: {
+  //   isFixed() {
+  //     if (this.scrollPosition > 0) {
+
+  //     }
+  //   }
+  // },
   methods: {
     filterList(){
         if(this.searchQuery !== null){ 
@@ -38,7 +49,13 @@ export default {
         }else{
             this.$emit(this.list)
         }        
-    }
+    },
+    updateScroll() {
+      if(this.$refs.thing) {
+        this.scrollPosition = this.$refs.thing.getBoundingClientRect().y
+      }
+      
+    }    
   }
 }
 </script>

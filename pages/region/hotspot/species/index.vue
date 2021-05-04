@@ -2,7 +2,7 @@
     <div>
       <div v-if="!loading">
         <div class="bg-white">
-        <img class="pb-4 bg-white" :src="require(`~/assets/birds/${speciesInfo.data[0].speciesCode}.png`)" />
+        <img class="pb-4 bg-white" :src="require(`~/assets/dither_by/dither_it_${speciesInfo.data[0].speciesCode}.jpg`)" />
         </div>
         <h1>{{speciesInfo.data[0].comName}}</h1>
         <p>{{speciesInfo.data[0].sciName}}</p>

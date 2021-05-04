@@ -1,5 +1,5 @@
 <template >
-  <div v-else>
+  <div class="h-full flex flex-col">
     <template v-if="loading" >
       <LoadingAnimation />
     </template>
@@ -8,29 +8,35 @@
         :list="recentObservationsInARegion" 
         titleProp="comName"  
         v-on:filter-query="filteredSpecies = $event" 
-      />      
-      <div id="map-wrap" class="w-full h-64 rounded-full">
-        <client-only>
-          <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
-            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-            <l-marker  :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]"></l-marker>
-          </l-map>
-        </client-only>
-      </div>      
-      <table class=" w-full my-2">
-        <thead class="text-left">
-            <tr>
-                <th>Bird</th>
-                <th @click="sortByQuantity()">#</th>
-            </tr>
-        </thead>   
-        <tbody>   
-          <tr v-for="ob in filteredSpecies">
-            <td class="border-t border-gray-400 py-2"><span @click="speciesSelected(ob.speciesCode)">{{ob.comName}}</span></td>
-            <td class="border-t border-gray-400 py-2">{{howMany(ob.howMany)}}  </td>
-          </tr> 
-        </tbody> 
-      </table>  
+      />     
+      <Tabs>
+        <template v-slot:tab1>
+          <table class="w-full border-t border-gray-100">
+            <thead class="text-left">
+                <tr>
+                    <th class="py-2">Bird</th>
+                    <th @click="sortByQuantity()">#</th>
+                </tr>
+            </thead>   
+            <tbody>   
+              <tr v-for="ob in filteredSpecies">
+                <td class="border-t border-gray-100 py-2"><span @click="speciesSelected(ob.speciesCode)">{{ob.comName}}</span></td>
+                <td class="border-t border-gray-100 py-2">{{howMany(ob.howMany)}}  </td>
+              </tr> 
+            </tbody> 
+          </table>  
+        </template> 
+        <template v-slot:tab2>
+          <div id="map-wrap" class="w-full h-full z-30">
+            <client-only>
+              <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
+                <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                <l-marker  :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]"></l-marker>
+              </l-map>
+            </client-only>
+          </div>  
+        </template>         
+      </Tabs>
     </template>
   </div>
 </template>

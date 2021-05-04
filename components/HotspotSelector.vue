@@ -1,36 +1,45 @@
 <template>
-    <div v-if="!loading">
-
+  <div class="h-full flex flex-col">
+    <template v-if="loading" >
+      <LoadingAnimation />
+    </template>
+    <template v-else>
       <SearchList 
         :list="hotspotsInARegion" 
         titleProp="locName"  
         v-on:filter-query="filteredHotspots = $event" 
       />
-
-      <div id="map-wrap" class="w-full h-64 relative z-30" v-show="hotspotsInARegion">       
-        <client-only>
-          <l-map :zoom=9 :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]">
-            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-            <template v-for="spot in filteredHotspots">
-              <l-marker :lat-lng="[spot.lat,spot.lng]" @click="hotspotSelected(spot.locId)"></l-marker>
-            </template>
-          </l-map>
-        </client-only>
-      </div>  
-      <table class=" w-full my-2">
-        <thead class="text-left">
-            <tr>
-                <th @click="sortByTitle()">Hotspot</th>
-                <th @click="sortByQuantity()">#</th>
-            </tr>
-        </thead>   
-        <tbody>   
-          <tr v-for="hotspot in filteredHotspots">
-            <td class="border-t border-gray-400 py-2"><span @click="hotspotSelected(hotspot.locId)">{{determineHotness(hotspot.numSpeciesAllTime)}} {{hotspot.locName}}</span></td>
-            <td class="border-t border-gray-400 py-2">{{hotspot.numSpeciesAllTime}}</td>
-          </tr> 
-        </tbody> 
-      </table>        
+      <Tabs>
+        <template v-slot:tab1>
+          <table class=" w-full mb-12">
+            <thead class="text-left">
+                <tr>
+                    <th @click="sortByTitle()">Hotspot</th>
+                    <th @click="sortByQuantity()">#</th>
+                </tr>
+            </thead>   
+            <tbody>   
+              <tr v-for="hotspot in filteredHotspots">
+                <td class="border-t border-gray-100 py-2"><span @click="hotspotSelected(hotspot.locId)">{{determineHotness(hotspot.numSpeciesAllTime)}} {{hotspot.locName}}</span></td>
+                <td class="border-t border-gray-100 py-2">{{hotspot.numSpeciesAllTime}}</td>
+              </tr> 
+            </tbody> 
+          </table>            
+        </template>
+        <template v-slot:tab2>
+          <div id="map-wrap" class="w-full h-full z-30" v-show="hotspotsInARegion">       
+            <client-only>
+              <l-map :zoom=9 :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]">
+                <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                <template v-for="spot in filteredHotspots">
+                  <l-marker :lat-lng="[spot.lat,spot.lng]" @click="hotspotSelected(spot.locId)"></l-marker>
+                </template>
+              </l-map>
+            </client-only>
+          </div>             
+        </template>        
+      </Tabs>
+    </template>
     </div>
 </template>
 

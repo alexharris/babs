@@ -1,11 +1,11 @@
 
 <template>
   <div class="w-full">
-    <h1 class="logo mb-4">{{ $t("title") }}</h1>
+    <h1 class="logo">{{ $t("title") }}</h1>
+    <p>Select a county to get started</p>
     <RegionSelector 
       @selected-region="onSelectedRegion" 
     />  
-    {{allBirdCodes}} 
   </div>
 </template>
 
