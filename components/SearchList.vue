@@ -8,8 +8,8 @@
 
 <template>
 
-    <div class="fixed bottom-0 left-0 bg-white w-full border-t-2 border-black">  
-        <input class="search-field p-2 text-lg border border-gray-200 w-full" type="text" v-model="searchQuery" placeholder="Search" @input="filterList()" />  
+    <div class="w-full ">  
+        <input class="search-field p-2 mb-2 text-lg w-full bg-gray-200 rounded text-black" type="text" v-model="searchQuery" placeholder="Search" @input="filterList()" />  
     </div>
 </template>
 

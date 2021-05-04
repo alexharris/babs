@@ -4,7 +4,8 @@
     <h1 class="logo mb-4">{{ $t("title") }}</h1>
     <RegionSelector 
       @selected-region="onSelectedRegion" 
-    />   
+    />  
+    {{allBirdCodes}} 
   </div>
 </template>
 
@@ -27,6 +28,7 @@ export default {
   data() {
     return {
       selectedRegion: this.$route.query.region,
+      allBirdCodes: []
       // selectedHotspot: this.$route.query.hotspot,  
       // selectedSpecies: this.$route.query.species,
       // view: 'intro' ,
@@ -47,8 +49,22 @@ export default {
     // this.getAllRegionInfo()
     // this.startingView()
     // this.getSelectedRegionInfo()
+    this.getAllBirdCodes()
   },
   methods: {
+    getAllBirdCodes() {
+      this.$axios.get('https://api.ebird.org/v2/product/spplist/US-CA', {
+        params: {
+
+        }
+      })
+      .then((response) => {
+        console.log(response)
+        this.allBirdCodes = response.data
+      }, (error) => {
+        console.log(error);
+      }); 
+    },
     onSelectedRegion(value) {
       this.selectedRegion = value
       this.$router.push({ query: {region: value} })

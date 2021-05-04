@@ -1,14 +1,9 @@
 <template>
     <div>
-        <div v-if="!loading">
-        <SearchList 
-          :list="speciesInfo.data" 
-          titleProp="comName"  
-          v-on:filter-query="filteredHotspots = $event" 
-        />
-
-          <!-- {{speciesInfo.data}} -->
-          <img src="~/assets/mewgul.png" />
+      <div v-if="!loading">
+        <div class="bg-white">
+        <img class="pb-4 bg-white" :src="require(`~/assets/birds/${speciesInfo.data[0].speciesCode}.png`)" />
+        </div>
         <h1>{{speciesInfo.data[0].comName}}</h1>
         <p>{{speciesInfo.data[0].sciName}}</p>
       <div id="map-wrap" class="w-full h-64 rounded-full">
@@ -30,7 +25,7 @@
                 </tr>
             </thead>   
             <tbody>         
-                <tr v-for="ob in filteredSpecies.data">
+                <tr v-for="ob in speciesInfo.data">
                     <td class="border-t border-gray-400 py-2">{{ob.locName}}</td>
                     <td class="border-t border-gray-400 py-2">{{ob.howMany}}</td>
                     <td class="border-t border-gray-400 py-2">{{ob.obsDate}}</td>
@@ -52,9 +47,15 @@ export default {
   mounted() {
       this.getSpeciesInfo()
   },
+  watchQuery(newQuery, oldQuery) {
+    // Only execute component methods if the old query string contained `bar`
+    // and the new query string contains `foo`
+    this.loading = true
+    this.selectedRegion = newQuery.species
+    this.getSpeciesInfo(newQuery.species)
+  },    
   data() {
     return {
-      filteredSpecies: [],
       speciesInfo: {},
       loading: true
     }
@@ -68,7 +69,6 @@ export default {
       })
       .then((response) => {
         this.speciesInfo = response
-        this.filteredSpecies = response
         this.loading = false
         console.log(response.data)
       }, (error) => {
