@@ -24,6 +24,10 @@ p {
     @apply mb-4
 }
 
+.link {
+    @apply text-blue-500 underline cursor-pointer;
+}
+
 .fixedSearch { 
     @apply  top-0 left-0 bg-white fixed shadow p-2
 }

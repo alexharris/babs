@@ -42,9 +42,10 @@ export default {
         if(this.searchQuery !== null){ 
 
             var newList = this.list.filter((item)=>{
-
+                console.log(item[this.titleProp])
                 return this.searchQuery.toLowerCase().split(' ').every(v => item[this.titleProp].toLowerCase().includes(v))
             })
+            console.log(newList)
             this.$emit('filter-query', newList)
         }else{
             this.$emit(this.list)

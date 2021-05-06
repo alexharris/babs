@@ -1,37 +1,40 @@
 <template >
-  <div class="h-full flex flex-col">
+  <div class="h-full flex flex-col" >
     <template v-if="loading" >
       <LoadingAnimation />
     </template>
     <template v-else>
-      <SearchList 
-        :list="recentObservationsInARegion" 
-        titleProp="comName"  
-        v-on:filter-query="filteredSpecies = $event" 
-      />     
+  
       <Tabs>
         <template v-slot:tab1>
+          <SearchList 
+            :list="recentObservationsInARegion" 
+            titleProp="comName"  
+            v-on:filter-query="filteredSpecies = $event" 
+          />             
           <table class="w-full border-t border-gray-100">
             <thead class="text-left">
                 <tr>
-                    <th class="py-2">Bird</th>
-                    <th @click="sortByQuantity()">#</th>
+                    <th class="py-2 cursor-pointer ">Bird</th>
+                    <th class="cursor-pointer" @click="sortByQuantity()">#</th>
                 </tr>
             </thead>   
             <tbody>   
               <tr v-for="ob in filteredSpecies">
-                <td class="border-t border-gray-100 py-2"><span @click="speciesSelected(ob.speciesCode)">{{ob.comName}}</span></td>
+                <td class="border-t border-gray-100 py-2 cursor-pointer "><span @click="speciesSelected(ob.speciesCode)">{{ob.comName}}</span></td>
                 <td class="border-t border-gray-100 py-2">{{howMany(ob.howMany)}}  </td>
               </tr> 
             </tbody> 
           </table>  
         </template> 
         <template v-slot:tab2>
-          <div id="map-wrap" class="w-full h-full z-30">
+          <div id="map-wrap" class="w-full h-full z-10">
             <client-only>
               <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                <l-marker  :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]"></l-marker>
+                <l-marker  :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]">
+                  <l-popup>Hello!</l-popup>
+                </l-marker>
               </l-map>
             </client-only>
           </div>  
@@ -57,6 +60,7 @@ export default {
       hotspotInfo: '',
       loading: true,
       sort: 'hotAsc',
+      popupContent: 'hello'
     }
   },
   mounted() {
@@ -120,7 +124,7 @@ export default {
     speciesSelected(code) {
       // this.$store.commit('setHotspot', value)
       this.$router.push({ path: '/region/hotspot/species', query: {region: this.$route.query.region, hotspot: this.$route.query.hotspot, species: code} })
-    }           
+    }             
   }
 }
 </script>

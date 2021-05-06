@@ -5,7 +5,7 @@
       <table class="w-full">          
         <tbody>   
           <tr v-for="region in filteredRegions">
-            <td class="border-t border-gray-100 py-2 px-2 cursor-pointer hover:bg-gray-100"><span @click="regionSelected(region)">{{region.name}}</span> </td>
+            <td class="border-t border-gray-100 py-2 cursor-pointer"><span @click="regionSelected(region)">{{region.name}}</span> </td>
           </tr> 
         </tbody> 
       </table>         
