@@ -28,7 +28,7 @@
           </table>  
         </template> 
         <template v-slot:tab2>
-          <div id="map-wrap" class="w-full h-full z-10">
+          <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow">
             <client-only>
               <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>

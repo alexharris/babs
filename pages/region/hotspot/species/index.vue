@@ -36,7 +36,7 @@
           titleProp="locName"  
           v-on:filter-query="filteredList = $event" 
         />            
-          <div id="map-wrap" class="w-full h-full pb-16 z-30">
+          <div id="map-wrap" class="w-full h-full z-30">
             <client-only>
               <l-map :zoom=11 :center="[speciesInfo.data[0].lat,speciesInfo.data[0].lng]">
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
