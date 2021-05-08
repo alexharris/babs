@@ -4,6 +4,7 @@
       <LoadingAnimation />
     </template>
     <template v-else>
+
       <SearchList 
         :list="hotspotsInARegion" 
         titleProp="locName"  
@@ -27,7 +28,7 @@
           </table>            
         </template>
         <template v-slot:tab2>
-          <div id="map-wrap" class="w-full h-full z-30" v-show="hotspotsInARegion">       
+          <!-- <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow" v-show="hotspotsInARegion">       
             <client-only>
               <l-map :zoom=9 :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]">
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -45,7 +46,16 @@
                 </template>
               </l-map>
             </client-only>
-          </div>             
+          </div>              -->
+          
+          <Map
+            :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]"
+            :list="filteredHotspots"
+            latProp="lat"
+            lngProp="lng"
+            :popup="true"
+            v-on:hotspot-selected="hotspotSelected($event)" 
+          />          
         </template>        
       </Tabs>
     </template>
@@ -53,9 +63,11 @@
 </template>
 
 <script>
+import Map from './Map.vue'
 
 
 export default {
+  components: { Map },
   props: ['regioninfo'],
   data() {
     return {

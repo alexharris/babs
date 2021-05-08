@@ -7,6 +7,7 @@
   
       <Tabs>
         <template v-slot:tab1>
+          <span class="pb-4">RECENT OBSERVATIONS</span>
           <SearchList 
             :list="recentObservationsInARegion" 
             titleProp="comName"  
@@ -28,7 +29,16 @@
           </table>  
         </template> 
         <template v-slot:tab2>
-          <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow">
+          <span class="pb-4">LOCATION</span>
+          <Map
+            :center="[hotspotInfo.latitude,hotspotInfo.longitude]"
+            :list="[hotspotInfo]"
+            latProp="latitude"
+            lngProp="longitude"
+            :popup="false"
+            v-on:hotspot-selected="hotspotSelected($event)" 
+          />          
+          <!-- <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow">
             <client-only>
               <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -37,7 +47,7 @@
                 </l-marker>
               </l-map>
             </client-only>
-          </div>  
+          </div>   -->
         </template>         
       </Tabs>
     </template>
@@ -68,7 +78,6 @@ export default {
   },
   methods: {
     getRecentObservationsInARegion(value) {
-      console.log(value)
       this.$axios.get('https://api.ebird.org/v2/data/obs/' + this.$route.query.hotspot + '/recent', {
         params: {
           back: 30,

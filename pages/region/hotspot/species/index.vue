@@ -31,12 +31,20 @@
           </table>          
         </template>   
         <template v-slot:tab2>
-        <SearchList 
-          :list="speciesInfo.data" 
-          titleProp="locName"  
-          v-on:filter-query="filteredList = $event" 
-        />            
-          <div id="map-wrap" class="w-full h-full z-30">
+          <SearchList 
+            :list="speciesInfo.data" 
+            titleProp="locName"  
+            v-on:filter-query="filteredList = $event" 
+          />    
+          <Map
+            :center="[speciesInfo.data[0].lat,speciesInfo.data[0].lng]"
+            :list="filteredList"
+            latProp="lat"
+            lngProp="lng"
+            v-on:hotspot-selected="hotspotSelected($event)" 
+            :popup="false"
+          />                   
+          <!-- <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow">
             <client-only>
               <l-map :zoom=11 :center="[speciesInfo.data[0].lat,speciesInfo.data[0].lng]">
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -45,7 +53,7 @@
                 </template>
               </l-map>
             </client-only>
-          </div>            
+          </div>             -->
         </template>
       </Tabs>     
         
