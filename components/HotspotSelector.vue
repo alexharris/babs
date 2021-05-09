@@ -12,7 +12,24 @@
       />
       <Tabs>
         <template v-slot:tab1>
-          <table class="w-full border-t border-gray-100">
+          <List 
+            :list="filteredHotspots"
+          >
+            <template v-slot:header1>
+              <span class="flex flex-row" @click="sortByTitle()">Hotspot <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleAsc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </template>
+            <template v-slot:header2>
+              <span class="flex flex-row justify-end" @click="sortByQuantity()">Obs <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleAsc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </template>            
+            <template v-slot:column1="slotProps">
+             <!-- {{determineHotness(slotProps.hotspot.numSpeciesAllTime)}} {{slotProps.hotspot.locName}} -->
+              <span @click="hotspotSelected(slotProps.item.locId)">{{slotProps.item.locName}} </span>
+            </template>
+            <template v-slot:column2="slotProps">
+              {{determineHotness(slotProps.item.numSpeciesAllTime)}} {{slotProps.item.numSpeciesAllTime}}
+            </template>            
+          </List>
+          <!-- <table class="w-full border-t border-gray-100">
             <thead class="text-left">
                 <tr>
                     <th class="cursor-pointer py-2" @click="sortByTitle()">Hotspot Name</th>
@@ -25,7 +42,7 @@
                 <td class="border-t border-gray-100 py-2">{{hotspot.numSpeciesAllTime}}</td>
               </tr> 
             </tbody> 
-          </table>            
+          </table>             -->
         </template>
         <template v-slot:tab2>
           <!-- <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow" v-show="hotspotsInARegion">       
@@ -71,8 +88,6 @@ export default {
   props: ['regioninfo'],
   data() {
     return {
-      sort: 'hotAsc',
-      sortTitle: 'titleAsc',
       selectedRegion: this.$route.query.region,
       title: 'name',
       hotspotsInARegion: [],
@@ -120,12 +135,12 @@ export default {
     },
     sortByQuantity() {
       if(this.sort !== 'hotAsc') {
-        this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
+        this.filteredHotspots = this.filteredHotspots.sort(function(a, b) {
           return a.numSpeciesAllTime - b.numSpeciesAllTime;
         });
         this.sort = 'hotAsc'
       } else {
-        this.hotspotsInARegion = this.hotspotsInARegion.sort(function(a, b) {
+        this.filteredHotspots = this.filteredHotspots.sort(function(a, b) {
           return b.numSpeciesAllTime - a.numSpeciesAllTime;
         });        
         this.sort = 'hotDesc'

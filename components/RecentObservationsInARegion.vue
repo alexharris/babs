@@ -13,10 +13,10 @@
             titleProp="comName"  
             v-on:filter-query="filteredSpecies = $event" 
           />             
-          <table class="w-full border-t border-gray-100">
+          <!-- <table class="w-full border-t border-gray-100">
             <thead class="text-left">
                 <tr>
-                    <th class="py-2 cursor-pointer ">Bird</th>
+                    <th class="py-2 cursor-pointer "  @click="sortByTitle()">Bird</th>
                     <th class="cursor-pointer" @click="sortByQuantity()">#</th>
                 </tr>
             </thead>   
@@ -26,7 +26,23 @@
                 <td class="border-t border-gray-100 py-2">{{howMany(ob.howMany)}}  </td>
               </tr> 
             </tbody> 
-          </table>  
+          </table>   -->
+          <List 
+            :list="filteredSpecies"
+          >
+            <template v-slot:header1>
+              <span @click="sortByTitle()">Bird</span>
+            </template>
+            <template v-slot:header2>
+              <span class="flex flex-row justify-end" @click="sortByQuantity()">Obs</span>
+            </template>            
+            <template v-slot:column1="slotProps">
+                <span @click="speciesSelected(slotProps.item.speciesCode)">{{slotProps.item.comName}}</span>
+            </template>
+            <template v-slot:column2="slotProps">
+              {{howMany(slotProps.item.howMany)}} 
+            </template>            
+          </List>          
         </template> 
         <template v-slot:tab2>
           <span class="pb-4">LOCATION</span>
@@ -70,7 +86,7 @@ export default {
       hotspotInfo: '',
       loading: true,
       sort: 'hotAsc',
-      popupContent: 'hello'
+      sortTitle: 'titleAsc'
     }
   },
   mounted() {
@@ -109,14 +125,29 @@ export default {
         console.log(error);
       }); 
     },
+    sortByTitle() {
+      
+      if(this.sortTitle !== 'titleAsc') {
+        this.filteredSpecies = this.filteredSpecies.sort(function(a, b) {
+          return a.comName.toLowerCase() > b.comName.toLowerCase();
+        });
+        this.sortTitle = 'titleAsc'
+      } else {
+        this.filteredSpecies = this.filteredSpecies.sort(function(a, b) {
+          return b.comName.toLowerCase() > a.comName.toLowerCase();
+        });        
+        this.sortTitle = 'titleDesc'
+      }
+
+    },      
     sortByQuantity() {
       if(this.sort !== 'hotAsc') {
-        this.recentObservationsInARegion = this.recentObservationsInARegion.sort(function(a, b) {
+        this.filteredSpecies = this.filteredSpecies.sort(function(a, b) {
           return a.howMany - b.howMany;
         });
         this.sort = 'hotAsc'
       } else {
-        this.recentObservationsInARegion = this.recentObservationsInARegion.sort(function(a, b) {
+        this.filteredSpecies = this.filteredSpecies.sort(function(a, b) {
           return b.howMany - a.howMany;
         });        
         this.sort = 'hotDesc'
