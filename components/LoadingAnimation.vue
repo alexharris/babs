@@ -1,9 +1,7 @@
 <template>
-
-        <div class="rotate-center border-dashed border-2 border-black w-16 h-16 rounded-full">
-        
-        </div>
-
+  <div class="h-full w-full flex flex-col justify-center items-center">
+    <div class="rotate-center border-dashed border-2 border-black w-16 h-16 rounded-full"></div>
+  </div>
 </template>
 
 

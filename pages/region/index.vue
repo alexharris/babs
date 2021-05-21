@@ -6,7 +6,7 @@
       />      
     </div> 
     <div v-else>
-      <LoadingAnimation />
+      <!-- <LoadingAnimation /> -->
     </div>
 </template>
 

@@ -59,7 +59,7 @@
         
 
         </div>
-        <div v-else>
+        <div class="h-full flex flex-col" v-else>
             <LoadingAnimation />
         </div>
     </div>
