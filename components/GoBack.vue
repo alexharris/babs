@@ -1,5 +1,5 @@
 <template>
-    <div @click="goBack()" class="cursor-pointer">
+    <div @click="goBack()" class="link">
         Back
     </div>
 </template>
@@ -11,9 +11,6 @@ export default {
 
   methods: {
     goBack() {
-        
-       console.log(this.$route.path)
-        
         if(this.$route.path == '/region') {
           this.$router.push({ path: '/' })
         } else if (this.$route.path == '/region/hotspot') {
@@ -21,7 +18,6 @@ export default {
         } else if (this.$route.path == '/region/hotspot/species') {
           this.$router.push({ path: '/region/hotspot', query: { region: this.$route.query.region, hotspot: this.$route.query.hotspot } })
         }
-
     },
   }
 }

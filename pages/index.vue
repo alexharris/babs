@@ -2,7 +2,7 @@
 <template>
   <div class="w-full">
     <h1 class="logo">{{ $t("title") }}</h1>
-    <p>Select a county to get started</p>
+    <p>Find birding hotspots in California.</p>
     <RegionSelector 
       @selected-region="onSelectedRegion" 
     />  
@@ -59,7 +59,6 @@ export default {
         }
       })
       .then((response) => {
-        console.log(response)
         this.allBirdCodes = response.data
       }, (error) => {
         console.log(error);

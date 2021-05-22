@@ -4,12 +4,13 @@
       <LoadingAnimation />
     </template>
     <template v-else>
-      
       <SearchList 
         :list="hotspotsInARegion" 
         titleProp="locName"  
+        placeholder="Search hotspots"
         v-on:filter-query="filteredHotspots = $event" 
       />
+      {{hotspotsInARegion}}
       <Tabs>
         <template v-slot:tab1>
           <List 
@@ -23,10 +24,13 @@
             </template>            
             <template v-slot:column1="slotProps">
              <!-- {{determineHotness(slotProps.hotspot.numSpeciesAllTime)}} {{slotProps.hotspot.locName}} -->
+             
               <span @click="hotspotSelected(slotProps.item.locId)">{{slotProps.item.locName}} </span>
             </template>
             <template v-slot:column2="slotProps">
-              {{determineHotness(slotProps.item.numSpeciesAllTime)}} {{slotProps.item.numSpeciesAllTime}}
+              {{determineHotness(slotProps.item.locId)}} 
+               <!-- {{slotProps.item.locId}} -->
+              <!-- {{determineHotness(slotProps.item.numSpeciesAllTime)}} {{slotProps.item.numSpeciesAllTime}} -->
             </template>            
           </List>
           <!-- <table class="w-full border-t border-gray-100">
@@ -95,7 +99,8 @@ export default {
       hotspotInfo: [],
       loading: true,
       sortTitle: 'titleDesc',
-      sort: 'hotDesc'
+      sort: 'hotDesc',
+      hotSpotCounts: {}
      
     }
   },
@@ -103,9 +108,7 @@ export default {
     this.getHotspotsInARegion(this.selectedRegion)
   },
   computed: {
-    resultQuery() {
-      return this.hotspotsInARegion
-    }
+
   },
   methods: {
     getHotspotsInARegion(value) {
@@ -117,19 +120,45 @@ export default {
         }
       })
       .then((response) => {
+        
         this.hotspotsInARegion = response.data
         this.filteredHotspots = response.data
+        this.getRecentObservationsInARegion(response.data)
         this.loading = false
       }, (error) => {
         console.log(error);
       });      
     },
+    getRecentObservationsInARegion(data) {
+        for (let i = 0; i < data.length; i++) {
+          this.$axios.get('https://api.ebird.org/v2/data/obs/' + data[i].locId + '/recent', {
+            params: {
+              back: 30
+            }
+          })
+          .then((response) => {
+            var id = data[i].locId
+            var count = response.data.length
+            this.$set( this.hotspotsInARegion, id, count )
+            
+          }, (error) => {
+            console.log(error);
+          });             
+        }
+        
+           
+    
+    },
+    getHotSpotCount(id) {
+      
+      return this.hotSpotCounts[id]
+    },    
     determineHotness(obs) {
-      if(obs > 300) {
+      if(obs > 80) {
         return '🔥🔥🔥'
-        } else if (obs > 200) {
+        } else if (obs > 40) {
           return '🔥🔥'
-      } else if (obs > 100) {
+      } else if (obs > 20) {
         return '🔥'
       } else {
         return ''

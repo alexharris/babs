@@ -30,6 +30,9 @@ export default {
     }
   },
   mounted() {
+    if(this.$route.query.hotspot == null) {
+      this.$router.push({ path: '/' })
+    }    
     this.getHotspotInfo(this.$route.query.hotspot)
   },
   computed: {

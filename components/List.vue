@@ -6,17 +6,17 @@
                     <th class="cursor-pointer py-2 w-3/4">
                         <slot name="header1"></slot>
                     </th>
-                    <th class=" cursor-pointer py-2 w-1/4">
+                    <th class=" cursor-pointer py-2 w-1/4" v-if="cols != 1">
                         <slot name="header2"></slot>
                     </th>
                 </tr>
             </thead>   
             <tbody>   
               <tr v-for="item in list">
-                <td class="border-t border-gray-100 py-2 cursor-pointer link">
+                <td class="border-t border-gray-100 py-2 cursor-pointer link" tabindex="1">
                     <slot name="column1" v-bind:item="item"></slot>
                 </td>
-                <td class="border-t border-gray-100 py-2 text-right">
+                <td class="border-t border-gray-100 py-2 text-right" v-if="cols != 1">
                     <slot name="column2" v-bind:item="item"></slot>
                 </td>
               </tr> 
@@ -30,7 +30,7 @@
 
 export default {
   
-  props: ['list'],
+  props: ['list', 'cols'],
   mounted() {
 
   },

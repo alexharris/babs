@@ -71,6 +71,9 @@
 
 export default {
   mounted() {
+      if(this.$route.query.species == null) {
+        this.$router.push({ path: '/' })
+      }       
       this.getSpeciesInfo()
   },
   watchQuery(newQuery, oldQuery) {

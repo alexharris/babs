@@ -7,10 +7,11 @@
   
       <Tabs>
         <template v-slot:tab1>
-          <span class="pb-4">RECENT OBSERVATIONS</span>
+          <span class="pb-4">Species observed in the last 30 days</span>
           <SearchList 
             :list="recentObservationsInARegion" 
             titleProp="comName"  
+            placeholder="Search species"
             v-on:filter-query="filteredSpecies = $event" 
           />             
           <!-- <table class="w-full border-t border-gray-100">
@@ -31,10 +32,10 @@
             :list="filteredSpecies"
           >
             <template v-slot:header1>
-              <span class="flex flex-row" @click="sortByTitle()">Bird <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleAsc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+              <span class="flex flex-row" @click="sortByTitle()">Bird <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleDesc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
             </template>
             <template v-slot:header2>
-              <span class="flex flex-row justify-end" @click="sortByQuantity()">Obs  <svg v-bind:class="{ 'rotate-180': sort == 'hotAsc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+              <span class="flex flex-row justify-end" @click="sortByQuantity()">Obs  <svg v-bind:class="{ 'rotate-180': sort == 'hotDesc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
             </template>            
             <template v-slot:column1="slotProps">
                 <span @click="speciesSelected(slotProps.item.speciesCode)">{{slotProps.item.comName}}</span>
@@ -85,8 +86,8 @@ export default {
       filteredSpecies: [],
       hotspotInfo: '',
       loading: true,
-      sort: 'hotDesc',
-      sortTitle: 'titleDesc'
+      sort: 'hotAsc',
+      sortTitle: 'titleAsc'
     }
   },
   mounted() {

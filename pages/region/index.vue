@@ -27,6 +27,9 @@ export default {
   },
   mounted() {
       this.getRegionInfo()
+      if(this.$route.query.region == null) {
+        this.$router.push({ path: '/' })
+      }
       
   },
   data() {

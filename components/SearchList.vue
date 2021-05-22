@@ -2,6 +2,7 @@
 //       <SearchList 
 //        :list="hotspotsInARegion" 
 //        titleProp="locName"  
+//        placeholder="Whatever"
 //        v-on:filter-query="filteredHotspots = $event" 
 //      />
 
@@ -10,7 +11,7 @@
   <div>
       <span ref="thing"></span>
       <div :class="{ fixedSearch: scrollPosition < 0}" class="w-full mb-4 ">  
-          <input ref="search" class="search-field p-2 text-lg w-full bg-gray-100 rounded text-black" type="text" v-model="searchQuery" placeholder="Search" @input="filterList()" />  
+          <input ref="search" class="search-field p-2 text-lg w-full bg-gray-100 rounded text-black" type="text" v-model="searchQuery" :placeholder="placeholder" @input="filterList()" />  
       </div>
     </div>
 </template>
@@ -20,7 +21,7 @@
 
 export default {
   
-  props: ['list', 'titleProp'],
+  props: ['list', 'titleProp', 'placeholder'],
   mounted() {
     window.addEventListener('scroll', this.updateScroll);    
   },
@@ -40,12 +41,9 @@ export default {
   methods: {
     filterList(){
         if(this.searchQuery !== null){ 
-
             var newList = this.list.filter((item)=>{
-                console.log(item[this.titleProp])
                 return this.searchQuery.toLowerCase().split(' ').every(v => item[this.titleProp].toLowerCase().includes(v))
             })
-            console.log(newList)
             this.$emit('filter-query', newList)
         }else{
             this.$emit(this.list)
