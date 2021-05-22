@@ -1,129 +1,43 @@
 
 <template>
-  <div class="w-full">
+  <div class="w-full h-full flex flex-col justify-around ">
     <h1 class="logo">{{ $t("title") }}</h1>
-    <p>Find birding hotspots in California.</p>
-    <RegionSelector 
-      @selected-region="onSelectedRegion" 
-    />  
+    <svg class="w-full" viewBox="0 0 336 169" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path opacity="0.8" d="M334.636 84.5C334.636 107.756 331.471 128.768 326.381 143.932C323.834 151.519 320.824 157.587 317.53 161.738C314.228 165.899 310.754 168 307.273 168C303.791 168 300.318 165.899 297.016 161.738C293.722 157.587 290.711 151.519 288.165 143.932C283.075 128.768 279.909 107.756 279.909 84.5C279.909 61.2441 283.075 40.2316 288.165 25.0677C290.711 17.4806 293.722 11.4127 297.016 7.26206C300.318 3.10087 303.791 1 307.273 1C310.754 1 314.228 3.10087 317.53 7.26206C320.824 11.4127 323.834 17.4806 326.381 25.0677C331.471 40.2316 334.636 61.2441 334.636 84.5Z" fill="#3B82F6" fill-opacity="0.8" stroke="black" stroke-width="2"/>
+      <path d="M19.0909 83.9091C19.0909 92.3182 17.9752 99.8903 16.1982 105.326C15.3079 108.049 14.2694 110.18 13.1644 111.61C12.0489 113.053 10.9862 113.636 10.0455 113.636C9.10466 113.636 8.04204 113.053 6.92652 111.61C5.82147 110.18 4.78302 108.049 3.89274 105.326C2.11574 99.8903 1 92.3182 1 83.9091C1 75.5 2.11574 67.9279 3.89274 62.4924C4.78302 59.7692 5.82147 57.6378 6.92652 56.2081C8.04204 54.7648 9.10466 54.1818 10.0455 54.1818C10.9862 54.1818 12.0489 54.7648 13.1644 56.2081C14.2694 57.6378 15.3079 59.7692 16.1982 62.4924C17.9752 67.9279 19.0909 75.5 19.0909 83.9091Z" fill="#77BF83" stroke="black" stroke-width="2"/>
+      <path d="M10.0455 54.3636L307.273 1.18182" stroke="black" stroke-width="2" stroke-dasharray="2 2"/>
+      <path d="M10.0455 113.455L306.348 167.833" stroke="black" stroke-width="2" stroke-dasharray="2 2"/>
+    </svg>
+
+    <Button route="/bycounty">
+      Browse by county
+    </Button>
+    <Button>
+      Find a bird
+    </Button>    
   </div>
 </template>
 
 <script>
 
-import EbirdClient, { Detail } from "ebird-client";
-const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
+import Button from '~/components/Button.vue'
 
-import RegionSelector from '~/components/RegionSelector.vue'
-
-// import HotspotSelector from '~/components/HotspotSelector.vue'
-// import RecentObservationsInARegion from '~/components/RecentObservationsInARegion.vue'
 
 export default {
   components: {
-    RegionSelector
-    // HotspotSelector,
-    // RecentObservationsInARegion
+    Button
   },  
   data() {
     return {
-      selectedRegion: this.$route.query.region,
-      allBirdCodes: []
-      // selectedHotspot: this.$route.query.hotspot,  
-      // selectedSpecies: this.$route.query.species,
-      // view: 'intro' ,
-      // regionInfo: ''
+
     }
     
   },
 
-  // computed: {
-  //   regionSelected(e) {
-  //       this.selectedRegion = e.target.value
-  //       // this.getSelectedRegionInfo();
-  //       // this.getHotspotsInARegion();
-  //   },       
-  // },
   mounted() {
-    // this.getRecentNearbyNotableObservations();
-    // this.getAllRegionInfo()
-    // this.startingView()
-    // this.getSelectedRegionInfo()
-    this.getAllBirdCodes()
+
   },
   methods: {
-    getAllBirdCodes() {
-      this.$axios.get('https://api.ebird.org/v2/product/spplist/US-CA', {
-        params: {
-
-        }
-      })
-      .then((response) => {
-        this.allBirdCodes = response.data
-      }, (error) => {
-        console.log(error);
-      }); 
-    },
-    onSelectedRegion(value) {
-      this.selectedRegion = value
-      this.$router.push({ query: {region: value} })
-      this.view = 'region'
-      // this.getSelectedRegionInfo()
-      // this.getHotspotsInARegion();
-    },
-    // onSelectedHotspot(value) {
-    //   this.$router.push({ query: {region: this.selectedRegion, hotspot: value} })
-    //   this.selectedHotspot = value
-    //   this.view = 'hotspot'
-    //   // this.getRecentObservationsInARegion();
-    // },
-    // onSelectedSpecies(value) {
-    //   this.$router.push({ query: {region: this.selectedRegion, hotspot: this.selectedHotspot, species: value} })
-    //   this.view = 'species'
-    // },    
-    // startingView() {
-    //   if(this.selectedHotspot !== undefined) {
-    //     this.view = 'hotspot'
-    //   } else if(this.selectedRegion !== undefined) {
-    //     this.view = 'region'
-    //   } else {
-    //     this.view = 'intro'
-    //   }
-    // },
-
-
-    // getAllRegionInfo() {
-    //   this.regionCodes.forEach(element => {
-    //     ebird.regionInfo({
-    //       regionCode: element
-    //     }).then((data) => {
-    //       this.allRegionInfo.push({
-    //         id: element,
-    //         name: data.result
-    //       })
-    //     }) 
-    //   });
-    // },
-    // getSelectedRegionInfo() {
-    //   ebird.regionInfo({
-    //     regionCode: this.selectedRegion
-    //   }).then((data) => {
-    //     this.regionInfo = data
-    //   })      
-    // },    
- 
-    // getRecentNearbyNotableObservations() {
-    //   ebird.recentNearbyNotableObservations({
-    //     lat: this.location.lat,
-    //     lng: this.location.long,
-    //     maxResults: 10,
-    //   })
-    //   .then((data) => {
-    //     this.recentNearbyNotableObservations = data
-    //   });
-    // },
-
-
 
 
   }
@@ -132,11 +46,3 @@ export default {
 
 </script>
 
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-
-</style>

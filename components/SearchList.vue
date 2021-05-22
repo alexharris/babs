@@ -10,8 +10,8 @@
 <template>
   <div>
       <span ref="thing"></span>
-      <div :class="{ fixedSearch: scrollPosition < 0}" class="w-full mb-4 ">  
-          <input ref="search" class="search-field p-2 text-lg w-full bg-gray-100 rounded text-black" type="text" v-model="searchQuery" :placeholder="placeholder" @input="filterList()" />  
+      <div :class="{ fixedSearch: scrollPosition < 0}" class="w-full py-4 bg-white z-50">  
+          <input ref="search" class="search-field p-2 text-lg w-full border-2 border-black rounded text-black" type="text" v-model="searchQuery" :placeholder="placeholder" @input="filterList()" />  
       </div>
     </div>
 </template>

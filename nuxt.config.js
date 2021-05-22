@@ -8,7 +8,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'California Birding Hotspots',
+    title: 'California Birding Hotspots.',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable="yes' },
@@ -95,7 +95,7 @@ export default {
       fallbackLocale: 'en',
       messages: {
         en: {
-          title: 'California Birding Hotspots'
+          title: 'California Birding Hotspots.'
         },
         es: {
           title: 'búsqueda de aves en el área de la bahía'
