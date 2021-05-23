@@ -6,7 +6,7 @@
         cols="1"
       >
         <template v-slot:header1>
-          <span class="flex flex-row" @click="sortByTitle()">County <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleDesc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          <span class="flex flex-row" @click="sortByTitle()">County <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleDesc' }" class="mt-1 mx-1 transform transition-all duration-250" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
         </template>
         <template v-slot:header2>
         </template>            

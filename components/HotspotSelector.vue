@@ -10,17 +10,16 @@
         placeholder="Search hotspots"
         v-on:filter-query="filteredHotspots = $event" 
       />
-      {{hotspotsInARegion}}
       <Tabs>
         <template v-slot:tab1>
           <List 
             :list="filteredHotspots"
           >
             <template v-slot:header1>
-              <span class="flex flex-row" @click="sortByTitle()">Hotspot <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleAsc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+              <span class="flex flex-row" @click="sortByTitle()">Hotspot <svg v-bind:class="{ 'rotate-180': sortTitle == 'titleAsc' }" class="mt-1 mx-1 transform transition-all duration-250" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
             </template>
             <template v-slot:header2>
-              <span class="flex flex-row justify-end" @click="sortByQuantity()">Obs <svg v-bind:class="{ 'rotate-180': sort == 'hotAsc' }" class="mt-1 mx-1 transform" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+              <span class="flex flex-row justify-end" @click="sortByQuantity()">Obs <svg v-bind:class="{ 'rotate-180': sort == 'hotAsc' }" class="mt-1 mx-1 transform transition-all duration-250" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
             </template>            
             <template v-slot:column1="slotProps">
              <!-- {{determineHotness(slotProps.hotspot.numSpeciesAllTime)}} {{slotProps.hotspot.locName}} -->
@@ -28,9 +27,11 @@
               <span @click="hotspotSelected(slotProps.item.locId)">{{slotProps.item.locName}} </span>
             </template>
             <template v-slot:column2="slotProps">
-              {{determineHotness(slotProps.item.locId)}} 
+              <!-- {{determineHotness(slotProps.item.numSpeciesAllTime)}} 
+              {} -->
+              <!-- {{getHotSpotCount(slotProps.item.locId)}} -->
                <!-- {{slotProps.item.locId}} -->
-              <!-- {{determineHotness(slotProps.item.numSpeciesAllTime)}} {{slotProps.item.numSpeciesAllTime}} -->
+              {{determineHotness(slotProps.item.numSpeciesAllTime)}} {{slotProps.item.numSpeciesAllTime}}
             </template>            
           </List>
           <!-- <table class="w-full border-t border-gray-100">
@@ -139,7 +140,7 @@ export default {
           .then((response) => {
             var id = data[i].locId
             var count = response.data.length
-            this.$set( this.hotspotsInARegion, id, count )
+            this.$set( this.hotSpotCounts, id, count )
             
           }, (error) => {
             console.log(error);
@@ -150,7 +151,7 @@ export default {
     
     },
     getHotSpotCount(id) {
-      
+      console.log(this.hotSpotCounts[id])
       return this.hotSpotCounts[id]
     },    
     determineHotness(obs) {

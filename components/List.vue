@@ -1,6 +1,6 @@
 <template>
-
-          <table class="w-full border-t border-gray-100 table-fixed">
+          <div>
+          <table class="w-full border-t border-gray-100 table-fixed mb-16">
             <thead class="text-left">
                 <tr>
                     <th class="cursor-pointer py-2 w-3/4">
@@ -22,7 +22,8 @@
               </tr> 
             </tbody> 
           </table>  
-
+          
+          </div>
 </template>
 
 

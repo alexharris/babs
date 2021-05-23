@@ -1,17 +1,18 @@
 <template>
   <div class="h-full flex flex-col">
-    <h1>{{hotspotInfo.name}}</h1>
-
-    <RecentObservationsInARegion />       
+    <h1 class="mt-4">{{hotspotInfo.name}}</h1>
+    <!-- <div class=flex flex-row>
+      <span @click="toggle = 'alltime'" class="link">All Time</span>
+      <span @click="toggle = '30days'"  class="link">30 days</span>
+    </div>
+    <SpeciesListForARegion v-if="toggle == 'alltime'" />     
+    <RecentObservationsInARegion v-if="toggle == '30days'" />        -->
+    <p><SpeciesListForARegion /> different species have been viewed at {{hotspotInfo.name}}, here are the ones that have been recorded in the last 30 days</p>
+    <RecentObservationsInARegion />
   </div>
 </template>
 
 <script>
-
-import EbirdClient, { Detail } from "ebird-client";
-const ebird = new EbirdClient('l74e03ri8jei'); //Get your API_KEY from eBird
-// https://github.com/dannyfritz/ebird-client#readme
-
 
 export default {
   watchQuery(newQuery, oldQuery) {
@@ -27,6 +28,7 @@ export default {
       selectedHotspot: this.$route.query.hotspot,
       hotspotInfo: [],
       mapLoading: true,
+      toggle: 'alltime'
     }
   },
   mounted() {
@@ -41,14 +43,23 @@ export default {
     // },
 
   },
-
+// https://api.ebird.org/v2/ref/hotspot/info/{{locId}}
   methods: {
     getHotspotInfo(value) {
-      ebird.hotspotInfo({
-        locId: value        
-      }).then((data) => {
-        this.hotspotInfo = data
-      })  
+      console.log(value)
+      this.$axios.get('https://api.ebird.org/v2/ref/hotspot/info/' + value, {
+        params: {
+ 
+        }
+      })
+      .then((response) => {
+        
+        this.hotspotInfo = response.data
+
+      }, (error) => {
+        console.log(error);
+      });   
+
     },
   }
 }

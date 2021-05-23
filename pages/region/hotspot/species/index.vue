@@ -1,18 +1,18 @@
 <template>
     <div class="h-full flex flex-col">
-      <div v-if="!loading" class="h-full flex flex-col">
-
-        <h1>{{speciesInfo.data[0].comName}}</h1>
-        <p>{{speciesInfo.data[0].sciName}}</p>
-          
+      <div v-if="!loading" class="h-full flex flex-col">          
       <Tabs>
         <template v-slot:tab1>
-        <div class="bg-white">
+
+        <div class="bg-white pt-2">
           <img class="pb-4 bg-white" :src="require(`~/assets/dither_by/dither_it_${speciesInfo.data[0].speciesCode}.jpg`)" />
         </div>   
+        <h1 class="pt-1">{{speciesInfo.data[0].comName}}</h1>
+        <p class="text-xl italic">{{speciesInfo.data[0].sciName}}</p>        
         <SearchList 
           :list="speciesInfo.data" 
           titleProp="locName"  
+          placeholder="Species locations"
           v-on:filter-query="filteredList = $event" 
         />                 
             <table class="w-full border-t border-gray-100">
@@ -34,6 +34,7 @@
           <SearchList 
             :list="speciesInfo.data" 
             titleProp="locName"  
+            placeholder="Species locations"
             v-on:filter-query="filteredList = $event" 
           />    
           <Map
