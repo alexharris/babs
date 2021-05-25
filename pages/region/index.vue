@@ -1,10 +1,13 @@
 <template>
     <div class="h-full flex flex-col" v-if="!loading">
-      <h1 class="mt-2"> {{regionInfo.data.result}} County Hotspots</h1>
-      <p>A list of birding hotspots in  {{regionInfo.data.result}} and how many species have ever been recorded there</p>
-      <HotspotSelector 
-        :regioninfo="regionInfo"
-      />      
+      <ShadowBox>
+        <h1> {{regionInfo.data.result}} County Hotspots</h1>
+        <p>A list of birding hotspots in  {{regionInfo.data.result}} and how many species have ever been recorded there</p>
+        </ShadowBox>
+        <HotspotSelector 
+          :regioninfo="regionInfo"
+        />      
+      
     </div> 
     <div v-else>
       <!-- <LoadingAnimation /> -->

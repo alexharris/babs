@@ -1,13 +1,15 @@
 <template>
   <div class="h-full flex flex-col">
-    <h1 class="mt-4">{{hotspotInfo.name}}</h1>
-    <!-- <div class=flex flex-row>
-      <span @click="toggle = 'alltime'" class="link">All Time</span>
-      <span @click="toggle = '30days'"  class="link">30 days</span>
-    </div>
-    <SpeciesListForARegion v-if="toggle == 'alltime'" />     
-    <RecentObservationsInARegion v-if="toggle == '30days'" />        -->
-    <p><SpeciesListForARegion /> different species have been viewed at {{hotspotInfo.name}}, here are the ones that have been recorded in the last 30 days</p>
+    <ShadowBox>
+      <h1>{{hotspotInfo.name}}</h1>
+      <!-- <div class=flex flex-row>
+        <span @click="toggle = 'alltime'" class="link">All Time</span>
+        <span @click="toggle = '30days'"  class="link">30 days</span>
+      </div>
+      <SpeciesListForARegion v-if="toggle == 'alltime'" />     
+      <RecentObservationsInARegion v-if="toggle == '30days'" />        -->
+      <p><SpeciesListForARegion /> different species have been viewed at {{hotspotInfo.name}}, here are the ones that have been recorded in the last 30 days</p>
+    </ShadowBox>
     <RecentObservationsInARegion />
   </div>
 </template>

@@ -95,7 +95,7 @@ export default {
       fallbackLocale: 'en',
       messages: {
         en: {
-          title: 'California Birding Hotspots.'
+          title: 'California Birding Hotspots'
         },
         es: {
           title: 'búsqueda de aves en el área de la bahía'

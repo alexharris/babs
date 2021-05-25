@@ -1,6 +1,10 @@
 
 <template>
   <div class="w-full h-full">
+    <ShadowBox>
+      <h1>{{ $t("title") }}.</h1>
+      <p>Select a county to get started</p>
+    </ShadowBox>
     <RegionSelector 
       @selected-region="onSelectedRegion" 
     />  

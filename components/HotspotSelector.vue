@@ -34,42 +34,8 @@
               {{determineHotness(slotProps.item.numSpeciesAllTime)}} {{slotProps.item.numSpeciesAllTime}}
             </template>            
           </List>
-          <!-- <table class="w-full border-t border-gray-100">
-            <thead class="text-left">
-                <tr>
-                    <th class="cursor-pointer py-2" @click="sortByTitle()">Hotspot Name</th>
-                    <th class=" cursor-pointer py-2" @click="sortByQuantity()">Obs</th>
-                </tr>
-            </thead>   
-            <tbody>   
-              <tr v-for="hotspot in filteredHotspots">
-                <td class="border-t border-gray-100 py-2 cursor-pointer link"><span @click="hotspotSelected(hotspot.locId)">{{determineHotness(hotspot.numSpeciesAllTime)}} {{hotspot.locName}}</span></td>
-                <td class="border-t border-gray-100 py-2">{{hotspot.numSpeciesAllTime}}</td>
-              </tr> 
-            </tbody> 
-          </table>             -->
         </template>
         <template v-slot:tab2>
-          <!-- <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow" v-show="hotspotsInARegion">       
-            <client-only>
-              <l-map :zoom=9 :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]">
-                <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                <template v-for="spot in filteredHotspots">
-                  <l-marker :lat-lng="[spot.lat,spot.lng]" >
-                    <l-popup>
-                      <span class="cursor-pointer font-bold" @click="hotspotSelected(spot.locId)">{{spot.locName}}</span>
-                      <br />
-                      <span> {{spot.numSpeciesAllTime}} observations</span>
-                      <br />
-                      <span class="link" @click="hotspotSelected(spot.locId)">view</span>
-                      
-                    </l-popup>
-                  </l-marker>
-                </template>
-              </l-map>
-            </client-only>
-          </div>              -->
-          
           <Map
             :center="[hotspotsInARegion[0].lat, hotspotsInARegion[0].lng]"
             :list="filteredHotspots"

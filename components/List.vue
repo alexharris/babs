@@ -1,6 +1,6 @@
 <template>
           <div>
-          <table class="w-full border-t border-gray-100 table-fixed mb-16">
+          <table class="w-full border-t border-black table-fixed mb-16">
             <thead class="text-left">
                 <tr>
                     <th class="cursor-pointer py-2 w-3/4">
@@ -13,10 +13,10 @@
             </thead>   
             <tbody>   
               <tr v-for="item in list">
-                <td class="border-t border-gray-100 py-2 cursor-pointer link" tabindex="1">
+                <td class="border-t border-black py-2 cursor-pointer link" tabindex="1">
                     <slot name="column1" v-bind:item="item"></slot>
                 </td>
-                <td class="border-t border-gray-100 py-2 text-right" v-if="cols != 1">
+                <td class="border-t border-black py-2 text-right" v-if="cols != 1">
                     <slot name="column2" v-bind:item="item"></slot>
                 </td>
               </tr> 

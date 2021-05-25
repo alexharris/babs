@@ -10,6 +10,10 @@
     
 }
 
+body {
+    @apply bg-yellow-50
+}
+
 h1 {
     font-family: 'times new roman';
     @apply text-3xl pb-4
@@ -29,7 +33,7 @@ p {
 }
 
 .fixedSearch { 
-    @apply  top-0 left-0 bg-white fixed shadow p-2
+    @apply  top-0 left-0 fixed shadow p-2
 }
 
 .vue2leaflet-map {

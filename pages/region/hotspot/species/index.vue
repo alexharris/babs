@@ -3,18 +3,24 @@
       <div v-if="!loading" class="h-full flex flex-col">          
       <Tabs>
         <template v-slot:tab1>
-
-        <div class="bg-white pt-2">
-          <img class="pb-4 bg-white" :src="require(`~/assets/dither_by/dither_it_${speciesInfo.data[0].speciesCode}.jpg`)" />
-        </div>   
-        <h1 class="pt-1">{{speciesInfo.data[0].comName}}</h1>
-        <p class="text-xl italic">{{speciesInfo.data[0].sciName}}</p>        
-        <SearchList 
-          :list="speciesInfo.data" 
-          titleProp="locName"  
-          placeholder="Species locations"
-          v-on:filter-query="filteredList = $event" 
-        />                 
+          <ShadowBox>
+            <div class="flex flex-col sm:flex-row sm:gap-4 justify-between">
+              <div class="bg-yellow-50 sm:order-2 mb-4">
+                <img :src="require(`~/assets/dither_by/dither_it_${speciesInfo.data[0].speciesCode}.jpg`)" />
+              </div>   
+              <div class="flex flex-col">
+                <h1 class="pt-1">{{speciesInfo.data[0].comName}}</h1>
+                <p class="text-xl italic">{{speciesInfo.data[0].sciName}}</p>
+                <p class="link mt-auto"><a :href="'https://www.allaboutbirds.org/guide/' + speciesInfo.data[0].speciesCode" >View full species profile on All About Birds</a></p>
+              </div>
+            </div>
+          </ShadowBox>
+          <SearchList 
+            :list="speciesInfo.data" 
+            titleProp="locName"  
+            placeholder="Species locations"
+            v-on:filter-query="filteredList = $event" 
+          />                 
             <table class="w-full border-t border-gray-100">
               <thead class="text-left">
                   <tr>
@@ -31,12 +37,14 @@
           </table>          
         </template>   
         <template v-slot:tab2>
+          <h1 class="pt-1">{{speciesInfo.data[0].comName}}</h1>
           <SearchList 
             :list="speciesInfo.data" 
             titleProp="locName"  
             placeholder="Species locations"
             v-on:filter-query="filteredList = $event" 
           />    
+          <br />
           <Map
             :center="[speciesInfo.data[0].lat,speciesInfo.data[0].lng]"
             :list="filteredList"

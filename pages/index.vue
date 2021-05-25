@@ -1,15 +1,16 @@
 
 <template>
-  <div class="w-full h-full flex flex-col justify-around ">
+  <div class="w-full h-full flex flex-col justify-around md:items-center">
     <h1 class="mainTitle">{{ $t("title") }}</h1>
     <Logo />
-
-    <Button route="/bycounty">
-      Browse by county
-    </Button>
-    <Button>
-      Find a bird
-    </Button>    
+    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+      <Button route="/bycounty">
+        Browse by county
+      </Button>
+      <Button>
+        Find a bird
+      </Button> 
+    </div>   
   </div>
 </template>
 
