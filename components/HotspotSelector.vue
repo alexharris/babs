@@ -4,6 +4,7 @@
       <LoadingAnimation />
     </template>
     <template v-else>
+
       <SearchList 
         :list="hotspotsInARegion" 
         titleProp="locName"  
@@ -12,6 +13,10 @@
       />
       <Tabs>
         <template v-slot:tab1>
+          <ShadowBox>
+            <h1> {{regioninfo.data.result}} County Hotspots</h1>
+            <p>A list of birding hotspots in  {{regioninfo.data.result}} and how many species have ever been recorded there</p>
+          </ShadowBox>          
           <List 
             :list="filteredHotspots"
           >

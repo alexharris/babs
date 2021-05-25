@@ -5,11 +5,11 @@
     <Logo />
     <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
       <Button route="/bycounty">
-        Browse by county
+        Start by choosing a county
       </Button>
-      <Button>
+      <!-- <Button>
         Find a bird
-      </Button> 
+      </Button>  -->
     </div>   
   </div>
 </template>

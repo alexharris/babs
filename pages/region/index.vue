@@ -1,9 +1,6 @@
 <template>
     <div class="h-full flex flex-col" v-if="!loading">
-      <ShadowBox>
-        <h1> {{regionInfo.data.result}} County Hotspots</h1>
-        <p>A list of birding hotspots in  {{regionInfo.data.result}} and how many species have ever been recorded there</p>
-        </ShadowBox>
+
         <HotspotSelector 
           :regioninfo="regionInfo"
         />      

@@ -12,21 +12,11 @@
             titleProp="comName"  
             placeholder="Search species"
             v-on:filter-query="filteredSpecies = $event" 
-          />             
-          <!-- <table class="w-full border-t border-gray-100">
-            <thead class="text-left">
-                <tr>
-                    <th class="py-2 cursor-pointer "  @click="sortByTitle()">Bird</th>
-                    <th class="cursor-pointer" @click="sortByQuantity()">#</th>
-                </tr>
-            </thead>   
-            <tbody>   
-              <tr v-for="ob in filteredSpecies">
-                <td class="border-t border-gray-100 py-2 cursor-pointer "><span @click="speciesSelected(ob.speciesCode)">{{ob.comName}}</span></td>
-                <td class="border-t border-gray-100 py-2">{{howMany(ob.howMany)}}  </td>
-              </tr> 
-            </tbody> 
-          </table>   -->
+          />   
+          <ShadowBox>
+            <h1>{{hotspotInfo.name}}</h1>
+            <p><SpeciesListForARegion /> different species have been viewed at {{hotspotInfo.name}}, here are the ones that have been recorded in the last 30 days</p>
+          </ShadowBox>                    
           <List 
             :list="filteredSpecies"
           >
@@ -45,7 +35,7 @@
           </List>          
         </template> 
         <template v-slot:tab2>
-          <span class="pb-4">LOCATION</span>
+          <span class="pb-4">{{hotspotInfo.name}}</span>
           <Map
             :center="[hotspotInfo.latitude,hotspotInfo.longitude]"
             :list="[hotspotInfo]"
@@ -54,16 +44,6 @@
             :popup="false"
             v-on:hotspot-selected="hotspotSelected($event)" 
           />          
-          <!-- <div id="map-wrap" class="w-full z-10 flex flex-col flex-grow">
-            <client-only>
-              <l-map :zoom=11 :center="[hotspotInfo.latitude,hotspotInfo.longitude]">
-                <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                <l-marker  :lat-lng="[hotspotInfo.latitude,hotspotInfo.longitude]">
-                  <l-popup>Hello!</l-popup>
-                </l-marker>
-              </l-map>
-            </client-only>
-          </div>   -->
         </template>         
       </Tabs>
     </template>

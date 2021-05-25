@@ -1,6 +1,6 @@
 <template>
           <div>
-          <table class="w-full border-t border-black table-fixed mb-16">
+          <table class="w-full border-t-2 border-black table-fixed mb-16">
             <thead class="text-left">
                 <tr>
                     <th class="cursor-pointer py-2 w-3/4">
